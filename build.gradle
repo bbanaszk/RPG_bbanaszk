@@ -1,0 +1,58 @@
+plugins {
+    id "com.github.spotbugs" version "5.0.12"
+    id "checkstyle"
+}
+
+apply plugin: 'application'
+
+mainClassName = 'Main'
+
+run {
+    standardInput = System.in
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation "junit:junit:4.12"
+    implementation files('cls/')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+apply plugin: 'checkstyle'
+checkstyle {
+    // Keep checkstyle a little quieter
+    ignoreFailures = true
+    showViolations = false
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.enabled = true
+        xml.enabled = false
+    }
+}
+checkstyle {
+    toolVersion = "8.8"
+}
+
+spotbugsMain {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+spotbugs {
+    ignoreFailures = true
+    showProgress = true
+    effort = 'max'
+}
