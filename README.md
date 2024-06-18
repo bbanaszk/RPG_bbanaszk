@@ -1,5 +1,4 @@
 # SER316 - Borys Banaszkiewicz
-![Party Wizard](partywizard.gif)
 
 ## Description 
 
