@@ -1,0 +1,12 @@
+rootProject.name = 'RPG_bbanaszk'
+include 'src:main:CharacterClasses'
+findProject(':src:main:CharacterClasses')?.name = 'CharacterClasses'
+include 'src:main:CharacterTypes'
+findProject(':src:main:CharacterTypes')?.name = 'CharacterTypes'
+include 'src:main:Design'
+findProject(':src:main:Design')?.name = 'Design'
+include 'src:main:Decorator'
+findProject(':src:main:Decorator')?.name = 'Decorator'
+include 'src:Game'
+findProject(':src:Game')?.name = 'Game'
+
