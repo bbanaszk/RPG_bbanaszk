@@ -5,4 +5,8 @@ public interface SpecialEffect {
 	void setEffect(int effect);
 	int getDuration();
 	void setDuration(int duration);
+	void setManaCost(int manaCost);
+	int getManaCost();
+	void setEffectName(String effectName);
+	String getEffectName();
 }

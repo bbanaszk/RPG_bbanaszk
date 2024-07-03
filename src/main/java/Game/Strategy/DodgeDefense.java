@@ -4,11 +4,11 @@ import Game.Character.Character;
 import Game.Decorator.CharacterDecorator;
 import Game.Decorator.PlayerModifier;
 
-public class MagicDefense implements CombatStrategy {
+public class DodgeDefense implements CombatStrategy {
 	private String strategyName;
 
-	public MagicDefense() {
-		this.strategyName = "Magic Defense";
+	public DodgeDefense() {
+		this.strategyName = "Dodge Defense";
 	}
 
 	@Override
@@ -16,8 +16,8 @@ public class MagicDefense implements CombatStrategy {
 		int attackPower = executor.getAttack();
 		int opponentDefense = opponent.getDefense();
 		double attackChance = (attackPower / (double)(attackPower + opponentDefense));
-		int magicDefense = (int)(attackChance * (((PlayerModifier)opponent).getMaxHealth()) * 1.3);
-		System.out.println("Magic Defense used! Enemy dealt " + magicDefense + " damage");
-		((CharacterDecorator)opponent).takeDamage(magicDefense);
+		int dodgeDefense = (int)(attackChance * (((PlayerModifier)opponent).getMaxHealth()) * 1.2);
+		System.out.println("Dodge Defense used. Enemy dealt " + dodgeDefense + " damage.");
+		((CharacterDecorator)opponent).takeDamage(dodgeDefense);
 	}
 }

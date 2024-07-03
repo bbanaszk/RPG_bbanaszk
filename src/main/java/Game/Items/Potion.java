@@ -18,7 +18,7 @@ public class Potion implements Item {
         this.manaAmount = manaAmount;
         this.rarity = rarity;
         this.specialEffect = specialEffect;
-        this.tier = 1;
+        this.tier = rarity.equals("Common") ? 1 : rarity.equals("Uncommon") ? 2 : rarity.equals("Rare") ? 3 : rarity.equals("Epic") ? 4 : 5;
     }
 
     @Override

@@ -185,14 +185,14 @@ public class ItemGenerator {
 
         // Generate Epic Items
         // One-Handed Weapons
-        epicItems.add(new Weapon("Elven Greatsword", 22, "Epic", false, null));
-        epicItems.add(new Weapon("Dragonbone Maul", 24, "Epic", false, null));
-        epicItems.add(new Weapon("Celestial Trident", 23, "Epic", false, null));
+        epicItems.add(new Weapon("Elven Greatsword", 22, "Epic", false, new PoisonEffect(1, 10)));
+        epicItems.add(new Weapon("Dragonbone Maul", 24, "Epic", false, new BurnEffect(1, 10)));
+        epicItems.add(new Weapon("Celestial Trident", 23, "Epic", false, new FreezeEffect(1, 10)));
 
         // Two-Handed Weapons
-        epicItems.add(new Weapon("Frostbite War Axe", 26, "Epic", true, null));
-        epicItems.add(new Weapon("Inferno Greatsword", 28, "Epic", true, null));
-        epicItems.add(new Weapon("Thunder Hammer", 27, "Epic", true, null));
+        epicItems.add(new Weapon("Frostbite War Axe", 26, "Epic", true,  new FreezeEffect(1, 12)));
+        epicItems.add(new Weapon("Inferno Greatsword", 28, "Epic", true, new BurnEffect(1, 12)));
+        epicItems.add(new Weapon("Thunder Hammer", 27, "Epic", true, new PoisonEffect(1, 12)));
 
         epicItems.add(new Shield("Elven Bulwark", 26, "Epic", null));
         epicItems.add(new Shield("Dragonbone Shield", 28, "Epic", null));
@@ -212,12 +212,12 @@ public class ItemGenerator {
 
         // Generate Legendary Items
         // One-Handed Weapons
-        legendaryItems.add(new Weapon("Blade of the Eternal", 28, "Legendary", false, null));
-        legendaryItems.add(new Weapon("Wrath of the Ancients", 30, "Legendary", false, null));
+        legendaryItems.add(new Weapon("Blade of the Eternal", 28, "Legendary", false, new FreezeEffect(1, 15)));
+        legendaryItems.add(new Weapon("Wrath of the Ancients", 30, "Legendary", false, new BurnEffect(1, 15)));
 
         // Two-Handed Weapons
-        legendaryItems.add(new Weapon("Eternal Greatsword", 32, "Legendary", true, null));
-        legendaryItems.add(new Weapon("Wrathblade", 34, "Legendary", true, null));
+        legendaryItems.add(new Weapon("Eternal Greatsword", 32, "Legendary", true, new BurnEffect(1, 17)));
+        legendaryItems.add(new Weapon("Wrathblade", 34, "Legendary", true, new FreezeEffect(1, 17)));
 
         legendaryItems.add(new Shield("Shield of the Eternal", 30, "Legendary", null));
         legendaryItems.add(new Shield("Wrathguard", 32, "Legendary", null));

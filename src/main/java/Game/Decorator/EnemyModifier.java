@@ -1,88 +1,177 @@
 package Game.Decorator;
 
 import Game.Character.Character;
-import Game.Items.Item;
-import Game.Items.Potion;
+import Game.Character.Enemy.Enemy;
+import Game.Items.*;
 import Game.SpecialEffects.*;
 
 import java.util.*;
 
 public class EnemyModifier extends CharacterDecorator {
-        private int enemyLevel = 1;
-        private int mana;
-        private int health;
-        private int xp = 0;
-        private double damageDoneMultiplier = 1.0;
-        private double damageTakenMultiplier = 1.0;
-        private double originalDamageDoneMultiplier = 1.0;
-        private double originalDamageTakenMultiplier = 1.0;
-        private List<Item> loot = new ArrayList<>();
+    private int enemyLevel = 1;
+    private int manaGained = 0;
+    private int healthGained = 0;
+    private int manaUsed = 0;
+    private int healthLost = 0;
+    private double xpMultiplier = 1.0;
+    private int weaponAttack;
+    private int weaponBlock;
+    private int specialEffectAttackBoost = 0;
+    private int specialEffectBlockBoost = 0;
+    private int xp = 0;
+    private double coins = 0;
+    private double attackMultiplier = 1.0;
+    private double damageMultiplier = 1.0;
+    private double originalDamageMultiplier = 1.0;
+    private HashMap<SpecialEffect, Integer> specialEffects = new HashMap<>();
+    private HashMap<String, Boolean> activeEffects = new HashMap<>();
+    private HashMap<String, Item> inventory = new HashMap<>();
 
-        public EnemyModifier(Character decoratedCharacter) {
-            super(decoratedCharacter);
-        }
+    public EnemyModifier(Character decoratedCharacter) {
+        super(decoratedCharacter);
+    }
 
-        public void setDamageDoneMultiplier(double multiplier) {
-            damageDoneMultiplier = multiplier;
-        }
+    public double getCoins() {
+        return super.getCoins() + coins;
+    }
 
-        public double getDamageDoneMultiplier() {
-            return damageDoneMultiplier;
-        }
+    public void addCoins(int coins) {
+        this.coins += coins;
+    }
 
-        public void setDamageTakenMultiplier(double multiplier) {
-            damageTakenMultiplier = multiplier;
-        }
+    public void setAttackMultiplier(double multiplier) {
+        attackMultiplier = multiplier;
+    }
 
-        public double getDamageTakenMultiplier() {
-            return damageTakenMultiplier;
-        }
+    public double getAttackMultiplier() {
+        return attackMultiplier;
+    }
 
-        public List<Item> getLoot() {
-            return this.loot;
-        }
-        public void setLoot(List<Item> loot) {
-            this.loot = loot;
-        }
+    public void setDamageMultiplier(double multiplier) {
+        damageMultiplier = multiplier;
+    }
 
-        public void setXp(int xp) {
-            this.xp += xp;
-        }
+    public double getDamageMultiplier() {
+        return damageMultiplier;
+    }
 
-        public int getXp() {
-            return xp;
-        }
+    public List<Item> getLoot() {
+        return decoratedCharacter.getLoot();
+    }
 
-        public void levelUp(int xp) {
-            setXp(-1*xp);
-            this.enemyLevel++;
-            this.damageDoneMultiplier += 0.1;
-            this.damageTakenMultiplier += 0.05;
-            this.health += 10;
-            this.mana += 5;
-            setAttack(this.getAttack());
-            setDefense(this.getDefense());
-            setHealth(this.getHealth());
-            setMana(this.getMana());
-        }
+    public void setLoot(List<Item> loot) {
+        decoratedCharacter.setLoot(loot);
+    }
 
-        @Override
-        public int getAttack() {
-            return (int)(super.getAttack() * damageDoneMultiplier);
-        }
+    public int getXp() {
+        return (int)((super.getXp()) * xpMultiplier);
+    }
 
-        @Override
-        public int getDefense() {
-            return (int)(super.getDefense() * damageTakenMultiplier);
-        }
+    public void levelUp(int numLevels) {
+        this.enemyLevel = numLevels;
+        this.attackMultiplier += (0.35 * numLevels);
+        this.damageMultiplier += (0.40 * numLevels);
+        this.healthGained += (10 * numLevels);
+        this.xpMultiplier += (0.5 * numLevels);
+    }
 
-        @Override
-        public int getMana() {
-            return super.getMana() + mana;
-        }
+    public int getEnemyLevel() {
+        return this.enemyLevel;
+    }
 
-        @Override
-        public int getHealth() {
-            return super.getHealth() + health;
+    @Override
+    public int getAttack() {
+        return (int)((super.getAttack()) * attackMultiplier);
+    }
+
+    @Override
+    public int getDefense() {
+        return (int)((super.getDefense()) * damageMultiplier);
+    }
+
+    @Override
+    public int getMana() {
+        return Math.max(0, super.getMana());
+    }
+
+    public int getMaxMana() {
+        return super.getMana();
+    }
+
+    @Override
+    public int getHealth() {
+        return Math.max(0, super.getHealth() + healthGained - healthLost);
+    }
+    public int getMaxHealth() {
+        return super.getHealth() + healthGained;
+    }
+
+    public void takeDamage(int damageAmount) {
+        this.healthLost += damageAmount;
+    }
+
+    public void resetHealth() {
+        this.healthLost = 0;
+    }
+
+    public void addHealth(int health) {
+        healthGained += health;
+    }
+
+    public void updateAttackPower() {
+        this.weaponAttack = 0;
+        this.weaponBlock = 0;
+        for (Item item : inventory.values()) {
+            if (item.getItemName().equals("Armor")) {
+                weaponBlock += ((Armor)item).getDefenseValue();
+                if (item.getSpecialEffect() != null) {
+                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();
+                }
+            }
+            if (item.getItemName().equals("Boots")) {
+                weaponBlock += ((Boots)item).getDefenseValue();
+                if (item.getSpecialEffect() != null) {
+                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();
+                }
+            }
+            if (item.getItemName().equals("Gauntlet")) {
+                weaponBlock += ((Gauntlet)item).getDefenseValue();
+                if (item.getSpecialEffect() != null) {
+                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();
+                }
+            }
+            if (item.getItemName().equals("Helm")) {
+                weaponBlock += ((Helm)item).getDefenseValue();
+                if (item.getSpecialEffect() != null) {
+                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();
+                }
+            }
+            if (item.getItemName().equals("Shield")) {
+                weaponBlock += ((Shield)item).getDefenseValue();
+                if (item.getSpecialEffect() != null) {
+                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();
+                }
+            }
+            if (item.getItemName().equals("Weapon")) {
+                if (((Weapon)item).isTwoHanded()) {
+                    weaponBlock += ((Weapon)item).getDamageValue();
+                    weaponAttack += ((Weapon)item).getDamageValue();
+                }
+                else {
+                    weaponAttack += ((Weapon)item).getDamageValue();
+                }
+
+                if (item.getSpecialEffect() != null) {
+                    specialEffectAttackBoost += item.getSpecialEffect().getEffect();
+                }
+            }
         }
     }
+
+    public void setSpecialEffectAttackBoost(int effect) {
+        specialEffectAttackBoost += effect;
+    }
+    public void setSpecialEffectBlockBoost(int effect) {
+        specialEffectBlockBoost += effect;
+    }
+}

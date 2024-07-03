@@ -14,7 +14,7 @@ public class Coin implements Item {
         this.itemName = itemName;
         this.value = value;
         this.rarity = rarity;
-        this.tier = 1; // Default tier value
+        this.tier = rarity.equals("Common") ? 1 : rarity.equals("Uncommon") ? 2 : rarity.equals("Rare") ? 3 : rarity.equals("Epic") ? 4 : 5;
     }
 
     @Override

@@ -144,12 +144,12 @@ should happen, the trainer battles, catches new code-a-mon, purchases items, etc
 # Design Patterns
 
 ## Factory Design Pattern
-- [ ] You must be able to choose a class for your character (or have it assigned randomly),
+- [x] You must be able to choose a class for your character (or have it assigned randomly),
   each class has a different subset of skills or magic. A class would constitute something
   along the lines of ’fighter’, ’mage’, ’thief’, get creative with it!
 
 
-- [ ] You should be able to choose a type for your character (or have it assigned randomly),
+- [x] You should be able to choose a type for your character (or have it assigned randomly),
   each race should have one passive skill that gets better after leveling up or that gives
   them advantage over another. rate A type would constitute something like, ’orc’,
   ’elf’, ’dwarf’, ’human’. Perhaps orcs are stronger naturally, perhaps elves are the
@@ -157,7 +157,7 @@ should happen, the trainer battles, catches new code-a-mon, purchases items, etc
   faster, get creative with it!
 
 
-- [ ] Your character should be able to equip items such as a sword, shield, helmet, armor,
+- [x] Your character should be able to equip items such as a sword, shield, helmet, armor,
   boots, etc. Your character should be able to equip a minimum of 3 unique item
   types. You get to decide what happens if you come across a second item type. For
   example, if you have 3 different swords you have programmed, and you have one
@@ -166,10 +166,10 @@ should happen, the trainer battles, catches new code-a-mon, purchases items, etc
   you only have one sword programmed and you already have one equipped and come
   across a new one, what happens?
 
-- [ ] Your character should have at minimum:
-    - [ ] Stats: Attack, Health, Mana/Other Resource such as cooldown, Defense, and
+- [x] Your character should have at minimum:
+    - [x] Stats: Attack, Health, Mana/Other Resource such as cooldown, Defense, and
       speed. Others can be added.
-    - [ ] Should have at least 1 skill or magic power they can use
+    - [x] Should have at least 1 skill or magic power they can use
     - [ ] Physical attacks should have a chance to critically strike (double damage)
     - [ ] All attacks should have a chance to fail/miss
     - [ ] Attacks should deal a min damage of 1

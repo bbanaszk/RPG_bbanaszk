@@ -2,6 +2,7 @@ package Game.Character.Player;
 
 import Game.Character.Character;
 import Game.Items.Item;
+import Game.SpecialEffects.SpecialEffect;
 
 import java.util.HashMap;
 
@@ -10,8 +11,10 @@ public class Player implements Character {
 	private int attack;
 	private int defense;
 	private int mana;
+	private int xp;
 	private String typeName;
 	private String className;
+	private SpecialEffect specialEffect;
 
 	private CharacterType type;
 	private CharacterClass cls;
@@ -33,4 +36,16 @@ public class Player implements Character {
 	public void setTypeName(String type) {this.typeName = type; }
 	public String getClassName() { return className; }
 	public void setClassName(String className) { this.className = className; }
+	public void setSpecialEffect(SpecialEffect specialEffect) { this.specialEffect = specialEffect; }
+	public SpecialEffect getSpecialEffect() { return specialEffect; }
+
+	@Override
+	public int getXp() {
+		return this.xp;
+	}
+
+	@Override
+	public void setXP(int xp) {
+		this.xp = xp;
+	}
 }

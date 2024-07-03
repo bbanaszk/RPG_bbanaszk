@@ -12,13 +12,15 @@ public class Small implements EnemyType {
     @Override
     public void applyAttributes(Character character) {
         character.setHealth(20);
-        character.setAttack(10);
-        character.setDefense(5);
+        character.setAttack(7);
+        character.setDefense(4);
         character.setMana(0);
         character.setTypeName("Small");
         ItemGenerator loot = new ItemGenerator();
         loot.generateItems();
         List<Item> commonItems = loot.shuffleList(loot.getCommonItems());
         ((Enemy) character).generateLoot(commonItems);
+        character.setCoins(5);
+        character.setXP(10);
     }
 }

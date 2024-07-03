@@ -22,5 +22,7 @@ public class Medium implements EnemyType {
         List<Item> rareItems = loot.shuffleList(loot.getRareItems());
         ((Enemy) character).generateLoot(uncommonItems);
         ((Enemy) character).generateLoot(rareItems);
+        character.setCoins(15);
+        character.setXP(25);
     }
 }

@@ -1,6 +1,7 @@
 package Game.Character;
 
 import Game.Items.Item;
+import Game.SpecialEffects.SpecialEffect;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,4 +22,10 @@ public interface Character {
 	default void setClassName(String className) {}
 	default List<Item> getLoot() { return new ArrayList<Item>(); }
 	default void setLoot(List<Item> loot) {}
+	default void setSpecialEffect(SpecialEffect specialEffect) {}
+	default SpecialEffect getSpecialEffect() { return null; }
+	default double getCoins() { return 0.0; }
+	default void setCoins(double coins) {}
+	int getXp();
+	void setXP(int xp);
 }

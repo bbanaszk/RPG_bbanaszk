@@ -63,4 +63,27 @@ public abstract class CharacterDecorator implements Character {
 	public void setMana(int mana) {
 		decoratedCharacter.setMana(mana);
 	}
+
+	@Override
+	public int getXp() {
+		return decoratedCharacter.getXp();
+	}
+
+	@Override
+	public void setXP(int xp) {
+		decoratedCharacter.setXP(xp);
+	}
+
+	@Override
+	public double getCoins() {
+		return decoratedCharacter.getCoins();
+	}
+
+	@Override
+	public void setCoins(double coins) {
+		decoratedCharacter.setCoins(coins);
+	}
+
+	public void takeDamage(int damage) {}
+
 }

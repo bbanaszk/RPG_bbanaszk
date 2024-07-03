@@ -2,17 +2,15 @@ package Game.Items;
 
 import Game.SpecialEffects.SpecialEffect;
 
-public class Helm implements Item {
+public class Perk implements Item {
+    private final String itemType = "Perk";
     private String itemName;
-    private int defenseValue;
-    private String rarity;
-
     public int tier;
+    private String rarity;
     public SpecialEffect specialEffect;
 
-    public Helm(String itemName, int defenseValue, String rarity, SpecialEffect specialEffect) {
+    public Perk(String itemName, String rarity, SpecialEffect specialEffect) {
         this.itemName = itemName;
-        this.defenseValue = defenseValue;
         this.rarity = rarity;
         this.specialEffect = specialEffect;
         this.tier = rarity.equals("Common") ? 1 : rarity.equals("Uncommon") ? 2 : rarity.equals("Rare") ? 3 : rarity.equals("Epic") ? 4 : 5;
@@ -38,14 +36,6 @@ public class Helm implements Item {
         this.tier = tier;
     }
 
-    public int getDefenseValue() {
-        return this.defenseValue;
-    }
-
-    public void setDefenseValue(int defenseValue) {
-        this.defenseValue = defenseValue;
-    }
-
     @Override
     public String getRarity() {
         return this.rarity;
@@ -64,16 +54,15 @@ public class Helm implements Item {
         this.specialEffect = specialEffect;
     }
 
-    private final String itemType = "Helm";
     public String getItemName() {
         return this.itemType;
     }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append("\n Name: " + itemName);
-        sb.append("\n Defense: " + defenseValue);
         sb.append("\n Tier: " + tier);
         sb.append("\n Rarity: " + rarity);
         sb.append("\n");

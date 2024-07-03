@@ -11,6 +11,8 @@ public class Enemy implements Character {
 	private int attack;
 	private int defense;
 	private int mana;
+	private double coins;
+	private int xp;
 	private String typeName;
 	private List<Item> loot;
 
@@ -31,4 +33,16 @@ public class Enemy implements Character {
 	public void setTypeName(String type) {this.typeName = type; }
 	public List<Item> getLoot() { return loot; }
 	public void generateLoot(List<Item> loot) { this.loot.addAll(loot); }
+
+	@Override
+	public void setCoins(double coins) { this.coins = coins; }
+
+	@Override
+	public double getCoins() { return coins; }
+
+	@Override
+	public int getXp() { return xp; }
+
+	@Override
+	public void setXP(int xp) { this.xp = xp;}
 }

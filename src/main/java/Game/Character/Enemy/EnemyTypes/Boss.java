@@ -14,7 +14,7 @@ public class Boss implements EnemyType {
     public void applyAttributes(Character character) {
         character.setHealth(200);
         character.setAttack(50);
-        character.setDefense(100);
+        character.setDefense(30);
         character.setMana(0);
         character.setTypeName("Boss");
         ItemGenerator loot = new ItemGenerator();
@@ -23,5 +23,7 @@ public class Boss implements EnemyType {
         List<Item> legendaryItems = loot.shuffleList(loot.getLegendaryItems());
         ((Enemy) character).generateLoot(epicItems);
         ((Enemy) character).generateLoot(legendaryItems);
+        character.setCoins(30);
+        character.setXP(100);
     }
 }

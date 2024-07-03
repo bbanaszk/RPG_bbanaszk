@@ -17,7 +17,7 @@ public class Weapon implements Item {
         this.rarity = rarity;
         this.twoHanded = twoHanded;
         this.specialEffect = specialEffect;
-        this.tier = 1;
+        this.tier = rarity.equals("Common") ? 1 : rarity.equals("Uncommon") ? 2 : rarity.equals("Rare") ? 3 : rarity.equals("Epic") ? 4 : 5;
     }
 
     @Override
