@@ -5,15 +5,31 @@ import Game.Character.Player.CharacterClass;
 import Game.Character.Player.CharacterType;
 import Game.Character.Player.Player;
 
+/**
+ * PlayerCreator class that extends the CharacterCreator abstract class. Responsible for creating the playable
+ * character by combining the Character Type and Character Class.
+ *
+ * @author Borys Banaszkiewicz
+ * @version 1.0
+ */
 public class PlayerCreator extends CharacterCreator {
 	private CharacterType type;
 	private CharacterClass cls;
 
+	/**
+	 * Constructor for creating the playable character given a character type and character class
+	 *
+	 * @param type character type to be generated
+	 * @param cls character class to be generated
+	 */
 	public PlayerCreator(CharacterType type, CharacterClass cls) {
 		this.type = type;
 		this.cls = cls;
 	}
 
+	/**
+	 * @see CharacterCreator#createCharacter()
+	 */
 	@Override
 	public Character createCharacter() {
 		return new Player(type, cls);

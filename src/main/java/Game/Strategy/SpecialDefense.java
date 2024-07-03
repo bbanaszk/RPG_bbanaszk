@@ -9,13 +9,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Special Defense strategy that implements the Combat Strategy interface.
+ *
+ * @author Borys Banaszkiewicz
+ * @version 1.0
+ */
 public class SpecialDefense implements CombatStrategy {
     private String strategyName;
 
+
+    /**
+     * Constructor for creating the special defense combat strategy. Sets the strategy name.
+     */
     public SpecialDefense() {
         this.strategyName = "Special Defense";
     }
 
+
+    /**
+     * Performs a special defensive strategy to not get effected by all possible damage
+     *
+     * @param executor is the Character object that is executing the combat strategy
+     * @param opponent is the Character object that is getting the combat strategy used on them
+     *
+     * @see CombatStrategy#execute(Character, Character)
+     */
     @Override
     public void execute(Character executor, Character opponent) {
         int attackPower = executor.getAttack();

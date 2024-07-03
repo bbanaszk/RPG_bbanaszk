@@ -3,7 +3,19 @@ package Game.Character.Player.CharacterTypes;
 import Game.Character.Character;
 import Game.Character.Player.CharacterType;
 
+/**
+ * Implements CharacterType interface to apply attributes specific to a Human character type.
+ *
+ * @author Borys Banaszkiewicz
+ * @version 1.0
+ */
 public class Human implements CharacterType {
+    /**
+     * Assigns the Character object that is passed in as a parameter as a Human with 3 additional health, 2 additional
+     * defense and 5 less mana.
+     *
+     * @see CharacterType#applyAttributes(Character)
+     */
     @Override
     public void applyAttributes(Character character) {
         character.setHealth(character.getHealth() + 3);

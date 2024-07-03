@@ -10,13 +10,8 @@ import Game.Character.Player.CharacterClass;
 import Game.Character.Player.CharacterClasses.*;
 import Game.Character.Player.CharacterType;
 import Game.Character.Player.CharacterTypes.*;
-import Game.Character.Player.Player;
-import Game.Decorator.EnemyModifier;
 import Game.Decorator.PlayerModifier;
 import Game.Floors.GamePlay;
-import Game.Items.*;
-import Game.SpecialEffects.*;
-import Game.Strategy.*;
 
 import java.util.*;
 

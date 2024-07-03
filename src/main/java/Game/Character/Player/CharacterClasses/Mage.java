@@ -2,11 +2,22 @@ package Game.Character.Player.CharacterClasses;
 
 import Game.Character.Character;
 import Game.Character.Player.CharacterClass;
-import Game.Character.Player.Player;
-import Game.SpecialEffects.BurnEffect;
 import Game.SpecialEffects.FreezeEffect;
 
+/**
+ * Implements CharacterType interface to apply attributes specific to a Mage character class.
+ *
+ * @author Borys Banaszkiewicz
+ * @version 1.0
+ */
 public class Mage implements CharacterClass {
+    /**
+     * Assigns the Character object that is passed in as a parameter as a Mage with 9 additional attack power, 10
+     * additional defense, 30 additional health, and 30 additional mana.
+     * Gives the character a Freeze Effect as their trait special effect.
+     *
+     * @see CharacterClass#applyAttributes(Character)
+     */
     @Override
     public void applyAttributes(Character character) {
         character.setAttack(character.getAttack() + 9);

@@ -5,14 +5,21 @@ import Game.Decorator.CharacterDecorator;
 import Game.Decorator.EnemyModifier;
 import Game.Decorator.PlayerModifier;
 import Game.Items.Item;
-import Game.Items.Potion;
 import Game.SpecialEffects.SpecialEffect;
 import Game.Strategy.CombatStrategy;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
+/**
+ * Concrete Mediator that is an implementation of the Mediator interface. Handles the interactions between various
+ * components such as floors, players, enemies, shops, etc. Manages the games logic and state changes based on certain
+ * interactions, which include handling the player's interaction with floors, enemies, shops, chests, and combat within the
+ * game.
+ *
+ * @author Borys Banaszkiewicz
+ * @version 1.0
+ */
 public class GamePlay implements FloorMediator {
     Floors floors;
     CharacterDecorator player;
@@ -21,6 +28,12 @@ public class GamePlay implements FloorMediator {
     private int currentCycle;
     private int xpMultiplier;
 
+
+    /**
+     * Constructor for GamePlay class. Initializes the game with a new Floors instance and the given player that is passed
+     * in as a CharacterDecorator
+     * @param player the player character as a CharacterDecorator.
+     */
     public GamePlay(CharacterDecorator player) {
         this.floors = new Floors();
         this.player = player;
@@ -39,6 +52,10 @@ public class GamePlay implements FloorMediator {
 
     }
 
+
+    /**
+     * @see FloorMediator#updateGameState()
+     */
     @Override
     public void updateGameState() {
         if (floors.getCurrentFloor() == 0) floors.nextFloor();
@@ -121,6 +138,13 @@ public class GamePlay implements FloorMediator {
         // topFloorOrNext method....
     }
 
+
+    /**
+     * Handles the combat between the player and the enemy. If player beats the enemy, then the player can pickup the loot
+     * dropped by the enemy.
+     * @param player the player character.
+     * @param enemy the enemy character.
+     */
     private void handleCombat(CharacterDecorator player, CharacterDecorator enemy) {
         System.out.println("Coming up across an enemy...");
         System.out.println("Enemy has these stats: ");
@@ -206,6 +230,10 @@ public class GamePlay implements FloorMediator {
         }
     }
 
+
+    /**
+     * Generates either a shop or a chest with items randomly chosen within the Floors class.
+     */
     private void generateShopOrChest() {
         Random random = new Random();
 
@@ -286,6 +314,11 @@ public class GamePlay implements FloorMediator {
         }
     }
 
+
+    /**
+     * Based on the player's health, determines whether to return to the top floor to recover or to continue to the next
+     * floor.
+     */
     public void topFloorOrNext() {
         if (player.getHealth() < (((PlayerModifier)player).getMaxHealth() * 0.15)) {
             // go back to top floor and get full health back
@@ -338,6 +371,18 @@ public class GamePlay implements FloorMediator {
         }
     }
 
+
+    /**
+     * Updates the game cycles based on the current floor number, adjusting player's attributes and multipliers accordingly.
+     * Cycles are defined as followed (and are changed every 5 floors)
+     * Q1 - first cycle, player gets a reduction in physical attacks for the next 5 floors.
+     * Q2 - second cycle, player gets their physical attack power back that was lost from Q1, and now has a 25% chance
+     *      to take a second turn in a row during combat for the next 5 floors.
+     * Q3 - third cycle, player looses the chance to take a second turn in a row during combat from Q2, but now gains
+     *      extra money for the next 5 floors.
+     * Q4 - fourth cycle, player looses the extra money multiplier that was given in Q3, and now gets a Temporary boost
+     *      to all of their attributes for the next 5 turns. (Goes back to Q1)
+     */
     public void updateCycle() {
         int floor = floors.getCurrentFloor();
 
@@ -416,10 +461,23 @@ public class GamePlay implements FloorMediator {
         }
     }
 
+
+    /**
+     * Checks if the game is over by evaluating if the player's health is less than or equal to zero.
+     * @return true if the player's health is less than or equal to zero, false otherwise.
+     */
     public boolean isGameOver() {
         return player.getHealth() <= 0;
     }
 
+
+    /**
+     * Gets a response from the user based on a prompt message.
+     *
+     * @param message the message to prompt the user.
+     * @return the user's response as a String.
+     * @throws IOException for handling I/O errors
+     */
     public String getResponse(String message) throws IOException {
         Scanner scnr = new Scanner(System.in);
 

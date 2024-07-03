@@ -1,12 +1,18 @@
 package Game.Items;
 
-import Game.Items.*;
 import Game.SpecialEffects.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class that generates all items that are made available in the game and categorizes these items by placing them in
+ * separate lists.
+ *
+ * @author Borys Banaszkiewicz
+ * @version 1.0
+ */
 public class ItemGenerator {
     private List<Item> allItems = new ArrayList<>();
     private List<Item> uncommonItems = new ArrayList<>();
@@ -18,6 +24,11 @@ public class ItemGenerator {
     private List<Item> potions = new ArrayList<>();
     private List<Item> coins = new ArrayList<>();
 
+
+    /**
+     * Generates all items in the game and automatically places them in their corresponding list based on rarity and item
+     * type for potions and coins.
+     */
     public void generateItems() {
 
         ////////////////////////////////////////////////////////////////////////////
@@ -271,38 +282,83 @@ public class ItemGenerator {
         coins.add(new Coin("Coin Bank", "Legendary", 1000));
     }
 
+
+    /**
+     * returns all the items generated (includes all rarities, all coins and all potions).
+     * @return list of all items
+     */
     public List<Item> getAllItems() {
         return this.allItems;
     }
 
+
+    /**
+     * returns all the uncommon items generated
+     * @return list of all uncommon items
+     */
     public List<Item> getUncommonItems() {
         return this.uncommonItems;
     }
 
+
+    /**
+     * returns all the common items generated
+     * @return list of all common items
+     */
     public List<Item> getCommonItems() {
         return this.commonItems;
     }
 
+
+    /**
+     * returns all the rare items generated
+     * @return list of all rare items
+     */
     public List<Item> getRareItems() {
         return this.rareItems;
     }
 
+
+    /**
+     * returns all the epic items generated
+     * @return list of all epic items
+     */
     public List<Item> getEpicItems() {
         return this.epicItems;
     }
 
+
+    /**
+     * returns all the legendary items generated
+     * @return list of all legendary items
+     */
     public List<Item> getLegendaryItems() {
         return this.legendaryItems;
     }
 
+
+    /**
+     * returns all the potions generated
+     * @return list of all potions
+     */
     public List<Item> getPotionItems() {
         return this.potions;
     }
 
+
+    /**
+     * returns all coins generated
+     * @return list of all coins
+     */
     public List<Item> getCoins() {
         return this.coins;
     }
 
+
+    /**
+     * shuffles the item list passed in to randomize order
+     * @return list of shuffled items list
+     */
     public List<Item> shuffleList(List<Item> items) {
         if (items != null) {
             Collections.shuffle(items);

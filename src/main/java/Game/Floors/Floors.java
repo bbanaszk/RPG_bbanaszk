@@ -3,7 +3,6 @@ package Game.Floors;
 import Game.Character.Character;
 import Game.Character.CharacterCreate.CharacterCreator;
 import Game.Character.CharacterCreate.EnemyCreator;
-import Game.Character.Enemy.EnemyType;
 import Game.Character.Enemy.EnemyTypes.Boss;
 import Game.Character.Enemy.EnemyTypes.Medium;
 import Game.Character.Enemy.EnemyTypes.Small;
@@ -18,27 +17,59 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Manages the generation of floors in the game. Each floor generates enemies, chests, shops and combat between the player
+ * and the generated enemy.
+ *
+ * @author Borys Banaszkiewicz
+ * @version 1.0
+ */
 public class Floors {
     private int currentFloor;
     private CharacterDecorator enemy;
 
+
+    /**
+     * Constructor for Floors class. Initializes the current floor to 0.
+     */
     public Floors() {
         this.currentFloor = 0;
     }
 
+
+    /**
+     * Gets the current floor number.
+     *
+     * @return the current floor number as an int
+     */
     public int getCurrentFloor() {
         return currentFloor;
     }
 
+
+    /**
+     * Advances to the next floor and generates a new enemy.
+     */
     public void nextFloor() {
         currentFloor++;
         this.enemy = generateEnemy();
     }
 
+
+    /**
+     * Regenerates the current floor by generating a new enemy.
+     */
     public void regenerateFloor() {
         this.enemy = generateEnemy();
     }
 
+
+    /**
+     * Generates an enemy based on the current floor number. Boss enemy is generated every 10th floor, medium enemy
+     * every 5th floor, and small enemy for all other floors.
+     *
+     * @return the generated enemy as a CharacterDecorator.
+     */
     public CharacterDecorator generateEnemy() {
 
         CharacterCreator createEnemy;
@@ -58,6 +89,11 @@ public class Floors {
         return new EnemyModifier(enemy);
     }
 
+
+    /**
+     * Generates a chest containing a random selection of items.
+     * @return a list of items contained in the chest.
+     */
     public List<Item> generateChest() {
         ItemGenerator items = new ItemGenerator();
         items.generateItems();
@@ -87,6 +123,12 @@ public class Floors {
         return chest;
     }
 
+
+    /**
+     * Generates a shop containing a selection of items for purchase. Has a 33% chance to include an instant level-up which
+     * has a legendary rarity.
+     * @return a list of items that will be available for purchase in the shop.
+     */
     public List<Item> generateShop() {
         ItemGenerator items = new ItemGenerator();
         items.generateItems();
@@ -132,6 +174,11 @@ public class Floors {
         return shop;
     }
 
+
+    /**
+     * Generates a random attack strategy.
+     * @return the generated attack strategy.
+     */
     public CombatStrategy generateAttackStrategy() {
         Random random = new Random();
         List<CombatStrategy> strategies = new ArrayList<>();
@@ -143,6 +190,11 @@ public class Floors {
         return strategies.get(random.nextInt(strategies.size()));
     }
 
+
+    /**
+     * Generates a random defense strategy.
+     * @return the generated defense strategy.
+     */
     public CombatStrategy generateDefenseStrategy() {
         Random random = new Random();
         List<CombatStrategy> strategies = new ArrayList<>();
@@ -155,6 +207,12 @@ public class Floors {
         return strategies.get(random.nextInt(strategies.size()));
     }
 
+
+    /**
+     * Drops loot from a defeated enemy.
+     * @param enemy the enemy character from which loot is dropped.
+     * @return the item dropped by the enemy.
+     */
     public Item dropLoot(Character enemy) {
         Random random = new Random();
         return enemy.getLoot().get(random.nextInt(enemy.getLoot().size()));
