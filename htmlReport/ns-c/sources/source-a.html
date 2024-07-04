@@ -1,0 +1,293 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Weapon</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">game.items</a>
+</div>
+
+<h1>Coverage Summary for Class: Weapon (game.items)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Weapon</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package game.items;
+&nbsp;
+&nbsp;import game.specialeffects.SpecialEffect;
+&nbsp;
+&nbsp;/**
+&nbsp; * Class for an item of type Weapon that implements the Item interface.
+&nbsp; *
+&nbsp; * @author Borys Banaszkiewicz
+&nbsp; * @version 1.0
+&nbsp; */
+&nbsp;public class Weapon implements Item {
+&nbsp;    private String itemName;
+&nbsp;    private int damageValue;
+&nbsp;    private String rarity;
+&nbsp;    private boolean twoHanded;
+&nbsp;    public SpecialEffect specialEffect;
+&nbsp;    public int tier;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor of the Armor Item. Automatically assigns tier based on rarity given.
+&nbsp;     *
+&nbsp;     * @param itemName      specifies the items name
+&nbsp;     * @param damageValue   specifies the items defense value as an int
+&nbsp;     * @param rarity        specifies the items rarity as a String
+&nbsp;     * @param twoHanded     specifies if this is a two-handed weapon which will not allow player to use a shield if it
+&nbsp;     *                      is
+&nbsp;     * @param specialEffect specifies the items specialEffect as a SpecialEffect object
+&nbsp;     */
+<b class="nc">&nbsp;    public Weapon(String itemName, int damageValue, String rarity, boolean twoHanded, SpecialEffect specialEffect) {</b>
+<b class="nc">&nbsp;        this.itemName = itemName;</b>
+<b class="nc">&nbsp;        this.damageValue = damageValue;</b>
+<b class="nc">&nbsp;        this.rarity = rarity;</b>
+<b class="nc">&nbsp;        this.twoHanded = twoHanded;</b>
+<b class="nc">&nbsp;        this.specialEffect = specialEffect;</b>
+<b class="nc">&nbsp;        this.tier = rarity.equals(&quot;Common&quot;) ? 1 : rarity.equals(&quot;Uncommon&quot;) ? 2 : rarity.equals(&quot;Rare&quot;) ? 3 :</b>
+<b class="nc">&nbsp;                rarity.equals(&quot;Epic&quot;) ? 4 : 5;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * sets this items damage value
+&nbsp;     *
+&nbsp;     * @param damageValue gained from using this item as an int
+&nbsp;     */
+&nbsp;    public void setDamageValue(int damageValue) {
+<b class="nc">&nbsp;        this.damageValue = damageValue;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * gets this items damage value
+&nbsp;     *
+&nbsp;     * @return int for the damage value gained from using this item
+&nbsp;     */
+&nbsp;    public int getDamageValue() {
+<b class="nc">&nbsp;        return this.damageValue;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * sets this item to be a two-handed weapon
+&nbsp;     *
+&nbsp;     * @param twoHanded is a boolean for if this item is a two-handed weapon or not
+&nbsp;     */
+&nbsp;    public void setTwoHanded(boolean twoHanded) {
+<b class="nc">&nbsp;        this.twoHanded = twoHanded;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * gets if this item is a two-handed weapon
+&nbsp;     *
+&nbsp;     * @return boolean for if this item is a two-handed weapon
+&nbsp;     */
+&nbsp;    public boolean isTwoHanded() {
+<b class="nc">&nbsp;        return this.twoHanded;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#getName()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String getName() {
+<b class="nc">&nbsp;        return this.itemName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#setName(String)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setName(String name) {
+<b class="nc">&nbsp;        this.itemName = name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#getTier()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getTier() {
+<b class="nc">&nbsp;        return this.tier;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#setTier(int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setTier(int tier) {
+<b class="nc">&nbsp;        this.tier = tier;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#getRarity()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String getRarity() {
+<b class="nc">&nbsp;        return this.rarity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#setRarity(String)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setRarity(String rarity) {
+<b class="nc">&nbsp;        this.rarity = rarity;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#getSpecialEffect()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public SpecialEffect getSpecialEffect() {
+<b class="nc">&nbsp;        return this.specialEffect;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#setSpecialEffect(SpecialEffect)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setSpecialEffect(SpecialEffect specialEffect) {
+<b class="nc">&nbsp;        this.specialEffect = specialEffect;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Item#getItemName()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String getItemName() {
+<b class="nc">&nbsp;        String itemType = &quot;Weapon&quot;;</b>
+<b class="nc">&nbsp;        return itemType;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see java.lang.String#toString()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String toString() {
+<b class="nc">&nbsp;        StringBuilder sb = new StringBuilder();</b>
+<b class="nc">&nbsp;        sb.append(&quot;\n&quot;);</b>
+<b class="nc">&nbsp;        sb.append(&quot; Name: &quot;).append(itemName);</b>
+<b class="nc">&nbsp;        sb.append(&quot;\n Damage: &quot;).append(damageValue);</b>
+<b class="nc">&nbsp;        sb.append(&quot;\n Tier: &quot;).append(tier);</b>
+<b class="nc">&nbsp;        sb.append(&quot;\n Rarity: &quot;).append(rarity);</b>
+<b class="nc">&nbsp;        sb.append(&quot;\n TwoHanded: &quot;).append(twoHanded);</b>
+<b class="nc">&nbsp;        sb.append(&quot;\n&quot;);</b>
+<b class="nc">&nbsp;        return sb.toString();</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,624 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > GamePlay</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">game.floors</a>
+</div>
+
+<h1>Coverage Summary for Class: GamePlay (game.floors)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GamePlay</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/82)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/217)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package game.floors;
+&nbsp;
+&nbsp;import game.AddDelay;
+&nbsp;import game.decorator.CharacterDecorator;
+&nbsp;import game.decorator.EnemyModifier;
+&nbsp;import game.decorator.PlayerModifier;
+&nbsp;import game.items.Item;
+&nbsp;import game.specialeffects.SpecialEffect;
+&nbsp;import game.strategy.CombatStrategy;
+&nbsp;
+&nbsp;import java.io.IOException;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.Random;
+&nbsp;import java.util.Scanner;
+&nbsp;
+&nbsp;/**
+&nbsp; * Concrete Mediator that is an implementation of the Mediator interface. Handles the interactions between various
+&nbsp; * components such as floors, players, enemies, shops, etc. Manages the games logic and state changes based on certain
+&nbsp; * interactions, which include handling the player&#39;s interaction with floors, enemies, shops, chests, and combat within
+&nbsp; * the game.
+&nbsp; *
+&nbsp; * @author Borys Banaszkiewicz
+&nbsp; * @version 1.0
+&nbsp; */
+&nbsp;public class GamePlay implements FloorMediator {
+&nbsp;    Floors floors;
+&nbsp;    CharacterDecorator player;
+&nbsp;    private boolean secondChance;
+&nbsp;    private double moneyMultiplier;
+&nbsp;    private int currentCycle;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for GamePlay class. Initializes the game with a new floors instance and the given player that is
+&nbsp;     * passed in as a CharacterDecorator
+&nbsp;     *
+&nbsp;     * @param player the player character as a CharacterDecorator.
+&nbsp;     */
+<b class="nc">&nbsp;    public GamePlay(CharacterDecorator player) {</b>
+<b class="nc">&nbsp;        this.floors = new Floors();</b>
+<b class="nc">&nbsp;        this.player = player;</b>
+<b class="nc">&nbsp;        this.secondChance = false;</b>
+<b class="nc">&nbsp;        this.moneyMultiplier = 1.0;</b>
+<b class="nc">&nbsp;        this.currentCycle = 1;</b>
+<b class="nc">&nbsp;        int xpMultiplier = 1;</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;\nGenerated a new character with the following base stats:&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Attack: &quot; + player.getAttack());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Defense: &quot; + player.getDefense());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Health: &quot; + player.getHealth());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Mana: &quot; + player.getMana());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Class: &quot; + player.getClassName());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Type: &quot; + player.getTypeName());</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see FloorMediator#updateGameState()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void updateGameState() {
+<b class="nc">&nbsp;        if (floors.getCurrentFloor() == 0) {</b>
+<b class="nc">&nbsp;            floors.nextFloor();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            topFloorOrNext();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(&quot;\n---------------------FLOOR SUMMARY---------------------&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Current Floor: &quot; + floors.getCurrentFloor());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\nCurrent player stats:&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Attack: &quot; + player.getAttack());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Defense: &quot; + player.getDefense());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Health: &quot; + player.getHealth());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Mana: &quot; + player.getMana());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Coins: &quot; + player.getCoins());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t XP: &quot; + player.getXp());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Level: &quot; + ((PlayerModifier) player).getPlayerLevel() + &quot;\n&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        String message = &quot;N&quot;;</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            message = getResponse(&quot;Would you like to see the inventory? Enter Y/N&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException ioe) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Something went wrong&quot;);</b>
+<b class="nc">&nbsp;            ioe.getStackTrace();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (message.equalsIgnoreCase(&quot;Y&quot;)) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;\nCurrent players inventory:&quot;);</b>
+<b class="nc">&nbsp;            HashMap&lt;String, Item&gt; inventory = ((PlayerModifier) player).getInventory();</b>
+<b class="nc">&nbsp;            for (Map.Entry&lt;String, Item&gt; entry : inventory.entrySet()) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;\t&quot; + entry.getKey() + &quot;: &quot; + entry.getValue());</b>
+&nbsp;            }
+<b class="nc">&nbsp;            if (inventory.isEmpty()) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Nothing in inventory yet!&quot;);</b>
+&nbsp;            }
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;            HashMap&lt;SpecialEffect, Integer&gt; specialEffects = ((PlayerModifier) player).getSpecialEffects();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (!specialEffects.isEmpty()) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Currently the following special effects are activated:&quot;);</b>
+<b class="nc">&nbsp;                for (SpecialEffect effect : specialEffects.keySet()) {</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;\tEffect: &quot; + effect.getEffectName());</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;\tDealing extra damage: &quot; + effect.getEffect());</b>
+&nbsp;                }
+<b class="nc">&nbsp;                System.out.println();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+&nbsp;        // could put a section here that asks to drink potions and to active special effects (just y/n)
+&nbsp;
+&nbsp;        // System.out.println(&quot;I will activate special effects now (if there are any to activate)&quot;);
+&nbsp;        // ((PlayerModifier)player).applyEffects();
+&nbsp;
+<b class="nc">&nbsp;        updateCycle();</b>
+&nbsp;
+<b class="nc">&nbsp;        CharacterDecorator enemy = floors.generateEnemy();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (floors.getCurrentFloor() % 10 == 0) {</b>
+<b class="nc">&nbsp;            ((EnemyModifier) enemy).levelUp((floors.getCurrentFloor()) / 10);</b>
+<b class="nc">&nbsp;        } else if (floors.getCurrentFloor() % 5 == 0) {</b>
+<b class="nc">&nbsp;            ((EnemyModifier) enemy).levelUp(floors.getCurrentFloor() / 5);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            ((EnemyModifier) enemy).levelUp(floors.getCurrentFloor());</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        handleCombat(player, enemy);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (isGameOver()) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;game Over. player has been defeated.&quot;);</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        generateShopOrChest();</b>
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;That was a tough one! Going to check my inventory for any potions and drink them before
+&nbsp;        // moving on&quot;);
+&nbsp;        //
+&nbsp;        // if (((PlayerModifier)player).getInventory().containsKey(&quot;Potion&quot;)) {
+&nbsp;        //     ((PlayerModifier)player).drinkPotion((Potion) ((PlayerModifier)player).getInventory().get(&quot;Potion&quot;));
+&nbsp;        // }
+&nbsp;        //
+&nbsp;        //  implement level up logic based on xp gained and if enough XP... implement this when going back to the
+&nbsp;        //  previous floor within the
+&nbsp;        //  topFloorOrNext method....
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Handles the combat between the player and the enemy. If player beats the enemy, then the player can pick up the
+&nbsp;     * loot dropped by the enemy.
+&nbsp;     *
+&nbsp;     * @param player the player character.
+&nbsp;     * @param enemy  the enemy character.
+&nbsp;     */
+&nbsp;    private void handleCombat(CharacterDecorator player, CharacterDecorator enemy) {
+<b class="nc">&nbsp;        System.out.println(&quot;Coming up across an enemy...&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;enemy has these stats: &quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Attack: &quot; + enemy.getAttack());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Defense: &quot; + enemy.getDefense());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Health: &quot; + enemy.getHealth());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Type: &quot; + enemy.getTypeName());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;\t Level: &quot; + ((EnemyModifier) enemy).getEnemyLevel());</b>
+<b class="nc">&nbsp;        System.out.println();</b>
+<b class="nc">&nbsp;        AddDelay.sleep(1000);</b>
+<b class="nc">&nbsp;        while (player.getHealth() &gt; 0 &amp;&amp; enemy.getHealth() &gt; 0) {</b>
+<b class="nc">&nbsp;            CombatStrategy playerStrategy = floors.generateAttackStrategy();</b>
+&nbsp;
+<b class="nc">&nbsp;            playerStrategy.execute(player, enemy);</b>
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+&nbsp;
+<b class="nc">&nbsp;            if (enemy.getHealth() &lt;= 0) {</b>
+&nbsp;                break;
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            if (secondChance) {</b>
+<b class="nc">&nbsp;                Random random = new Random();</b>
+<b class="nc">&nbsp;                int chance = random.nextInt(4);</b>
+<b class="nc">&nbsp;                if (chance == 1) {</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;You just got a chance to perform a second attack on the enemy!&quot;);</b>
+<b class="nc">&nbsp;                    playerStrategy = floors.generateAttackStrategy();</b>
+&nbsp;
+<b class="nc">&nbsp;                    playerStrategy.execute(player, enemy);</b>
+<b class="nc">&nbsp;                    AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;                    if (enemy.getHealth() &lt;= 0) {</b>
+&nbsp;                        break;
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;            // generate defense strategy
+<b class="nc">&nbsp;            playerStrategy = floors.generateDefenseStrategy();</b>
+&nbsp;
+&nbsp;            // enemy striking player and player defending
+<b class="nc">&nbsp;            playerStrategy.execute(enemy, player);</b>
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;            if (player.getHealth() &lt;= 0) {</b>
+&nbsp;                break;
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (enemy.getHealth() &lt;= 0) {</b>
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;            int xp = enemy.getXp();</b>
+<b class="nc">&nbsp;            System.out.println(&quot;You have successfully beat the enemy and get &quot; + xp + &quot; xp! \nLooks like the enemy &quot;</b>
+&nbsp;                    + &quot;dropped something...&quot;);
+<b class="nc">&nbsp;            ((PlayerModifier) player).addXp(xp);</b>
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;            double moneyDropped = enemy.getCoins() * moneyMultiplier;</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Looks like the enemy dropped &quot; + moneyDropped + &quot; coins! Adding this to inventory.&quot;);</b>
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;            ((PlayerModifier) player).addCoins(moneyDropped);</b>
+&nbsp;
+<b class="nc">&nbsp;            String message = &quot;Y&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;            Item droppedLoot = floors.dropLoot(enemy);</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Dropped loot from enemy:&quot; + droppedLoot);</b>
+<b class="nc">&nbsp;            AddDelay.sleep(1000);</b>
+&nbsp;            try {
+<b class="nc">&nbsp;                message = getResponse(&quot;pickup loot? Enter Y/N&quot;);</b>
+<b class="nc">&nbsp;            } catch (IOException ioe) {</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Something went wrong&quot;);</b>
+<b class="nc">&nbsp;                ioe.getStackTrace();</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            if (message.equalsIgnoreCase(&quot;Y&quot;)) {</b>
+<b class="nc">&nbsp;                AddDelay.sleep(2000);</b>
+<b class="nc">&nbsp;                HashMap&lt;String, Item&gt; inventory = ((PlayerModifier) player).getInventory();</b>
+&nbsp;
+<b class="nc">&nbsp;                if (inventory.containsKey(droppedLoot.getItemName())) {</b>
+<b class="nc">&nbsp;                    if (inventory.get(droppedLoot.getItemName()).getTier() &lt; droppedLoot.getTier()) {</b>
+<b class="nc">&nbsp;                        System.out.println(&quot;Good Find! picking up &quot; + droppedLoot.getItemName() + &quot;.&quot;);</b>
+<b class="nc">&nbsp;                        ((PlayerModifier) player).updateInventory(droppedLoot.getItemName(), droppedLoot);</b>
+&nbsp;                    } else {
+<b class="nc">&nbsp;                        System.out.println(&quot;Already have a stronger &quot; + droppedLoot.getItemName() + &quot;... Moving on&quot;);</b>
+&nbsp;                    }
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Dont have a  &quot; + droppedLoot.getItemName() + &quot; yet, adding to inventory&quot;);</b>
+<b class="nc">&nbsp;                    ((PlayerModifier) player).updateInventory(droppedLoot.getItemName(), droppedLoot);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        } else {
+<b class="nc">&nbsp;            isGameOver();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates either a shop or a chest with items randomly chosen within the floors class.
+&nbsp;     */
+&nbsp;    private void generateShopOrChest() {
+<b class="nc">&nbsp;        Random random = new Random();</b>
+&nbsp;
+<b class="nc">&nbsp;        AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;        if (random.nextBoolean()) {</b>
+<b class="nc">&nbsp;            if (random.nextBoolean()) {</b>
+&nbsp;                // generate chest
+<b class="nc">&nbsp;                List&lt;Item&gt; chestItems = floors.generateChest();</b>
+<b class="nc">&nbsp;                System.out.println(&quot;Came across a chest!&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                String message = &quot;Y&quot;;</b>
+&nbsp;
+&nbsp;                try {
+<b class="nc">&nbsp;                    message = getResponse(&quot;Open Chest? Enter Y/N&quot;);</b>
+<b class="nc">&nbsp;                } catch (IOException ioe) {</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;Something went wrong&quot;);</b>
+<b class="nc">&nbsp;                    ioe.getStackTrace();</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                if (message.equalsIgnoreCase(&quot;Y&quot;)) {</b>
+<b class="nc">&nbsp;                    for (Item item : chestItems) {</b>
+<b class="nc">&nbsp;                        AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;                        System.out.println(&quot;Item: &quot; + item);</b>
+<b class="nc">&nbsp;                        if (((PlayerModifier) player).getInventory().containsKey(item.getItemName())) {</b>
+<b class="nc">&nbsp;                            if (((PlayerModifier) player).getInventory().get(item.getItemName()).getTier()</b>
+<b class="nc">&nbsp;                                    &lt; item.getTier()) {</b>
+<b class="nc">&nbsp;                                System.out.println(&quot;Item found in chest is stronger than what I currently have, &quot;</b>
+&nbsp;                                        + &quot;swapping with item found in chest&quot;);
+<b class="nc">&nbsp;                                ((PlayerModifier) player).updateInventory(item.getItemName(), item);</b>
+&nbsp;                            } else {
+<b class="nc">&nbsp;                                System.out.println(&quot;Already have a stronger &quot; + item.getItemName() + &quot;... Moving on&quot;);</b>
+&nbsp;                            }
+&nbsp;                        } else {
+<b class="nc">&nbsp;                            System.out.println(&quot;Dont have a &quot; + item.getItemName() + &quot; yet, equipping...&quot;);</b>
+<b class="nc">&nbsp;                            ((PlayerModifier) player).updateInventory(item.getItemName(), item);</b>
+&nbsp;                        }
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            } else {
+&nbsp;                // generate shop
+<b class="nc">&nbsp;                List&lt;Item&gt; shopItems = floors.generateShop();</b>
+&nbsp;
+<b class="nc">&nbsp;                System.out.println(&quot;Came across a store!&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;                String message = &quot;Y&quot;;</b>
+&nbsp;
+&nbsp;                try {
+<b class="nc">&nbsp;                    message = getResponse(&quot;visit store? Enter Y/N&quot;);</b>
+<b class="nc">&nbsp;                } catch (IOException ioe) {</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;Something went wrong&quot;);</b>
+<b class="nc">&nbsp;                    ioe.getStackTrace();</b>
+&nbsp;                }
+&nbsp;
+<b class="nc">&nbsp;                if (message.equalsIgnoreCase(&quot;Y&quot;)) {</b>
+<b class="nc">&nbsp;                    for (Item item : shopItems) {</b>
+<b class="nc">&nbsp;                        AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;                        System.out.println(item.getRarity() + &quot; : &quot; + item.getItemName());</b>
+<b class="nc">&nbsp;                        if (((PlayerModifier) player).getInventory().containsKey(item.getItemName())) {</b>
+<b class="nc">&nbsp;                            if (((PlayerModifier) player).getInventory().get(item.getItemName()).getTier()</b>
+<b class="nc">&nbsp;                                    &lt; item.getTier()) {</b>
+<b class="nc">&nbsp;                                if (player.getCoins() &gt;= ((item.getTier() * 5))) {</b>
+<b class="nc">&nbsp;                                    System.out.println(&quot;This is stronger than what I currently have, &quot;</b>
+&nbsp;                                            + &quot;and I have enough money to buy it, purchasing this now!&quot;);
+<b class="nc">&nbsp;                                    ((PlayerModifier) player).updateInventory(item.getItemName(), item);</b>
+<b class="nc">&nbsp;                                    ((PlayerModifier) player).addCoins(-1 * (item.getTier() * 5));</b>
+&nbsp;                                }
+&nbsp;                            }
+&nbsp;                        } else {
+<b class="nc">&nbsp;                            if (player.getCoins() &gt;= ((item.getTier() * 5))) {</b>
+<b class="nc">&nbsp;                                System.out.println(item.getItemName() + &quot; in store is an item I dont have in my &quot;</b>
+&nbsp;                                        + &quot;inventory yet, and I have enough money to buy it, purchasing this now!&quot;);
+<b class="nc">&nbsp;                                ((PlayerModifier) player).updateInventory(item.getItemName(), item);</b>
+<b class="nc">&nbsp;                                ((PlayerModifier) player).addCoins(-1 * (item.getTier() * 5));</b>
+&nbsp;                            }
+&nbsp;                        }
+<b class="nc">&nbsp;                        System.out.println(&quot;Cost: &quot; + (item.getTier() * 5));</b>
+&nbsp;                    }
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Based on the player&#39;s health, determines whether to return to the top floor to recover or to continue to the next
+&nbsp;     * floor.
+&nbsp;     */
+&nbsp;    public void topFloorOrNext() {
+<b class="nc">&nbsp;        if (player.getHealth() &lt; (((PlayerModifier) player).getMaxHealth() * 0.15)) {</b>
+&nbsp;            // go back to top floor and get full health back
+&nbsp;            // give player back mana and health and redo current floor
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Health is critically low. Going to the top floor to recover...&quot;);</b>
+<b class="nc">&nbsp;            ((PlayerModifier) player).resetHealth();</b>
+<b class="nc">&nbsp;            ((PlayerModifier) player).resetMana();</b>
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+&nbsp;
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;            floors.regenerateFloor();</b>
+&nbsp;        } else {
+&nbsp;            // continue to next floor....
+<b class="nc">&nbsp;            AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;            System.out.println(&quot;I gained 100xp for beating that one. Moving onto the next floor....&quot;);</b>
+<b class="nc">&nbsp;            ((PlayerModifier) player).addXp(100);</b>
+<b class="nc">&nbsp;            floors.nextFloor();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        AddDelay.sleep(3000);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;I have &quot; + player.getXp() + &quot;xp points, and I need &quot;</b>
+<b class="nc">&nbsp;                + (2 * 10 * ((PlayerModifier) player).getPlayerLevel()) + &quot;xp to level up&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        String message = &quot;Y&quot;;</b>
+&nbsp;
+&nbsp;        try {
+<b class="nc">&nbsp;            message = getResponse(&quot;level up?&quot;);</b>
+<b class="nc">&nbsp;        } catch (IOException ioe) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Something went wrong&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (message.equalsIgnoreCase(&quot;Y&quot;)) {</b>
+&nbsp;            while (true) {
+<b class="nc">&nbsp;                int xpRequired = 2 * 10 * ((PlayerModifier) player).getPlayerLevel();</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;                if (player.getXp() &gt;= xpRequired) {</b>
+<b class="nc">&nbsp;                    ((PlayerModifier) player).levelUp();</b>
+<b class="nc">&nbsp;                    ((PlayerModifier) player).addXp(-xpRequired);</b>
+<b class="nc">&nbsp;                    System.out.println(&quot;Leveled up! now I have &quot; + player.getXp() + &quot;xp points, and I need &quot;</b>
+<b class="nc">&nbsp;                            + (2 * 10 * ((PlayerModifier) player).getPlayerLevel()) + &quot;xp to level up&quot;);</b>
+<b class="nc">&nbsp;                    AddDelay.sleep(3000);</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    System.out.println(&quot;Not enough XP to level up!&quot;);</b>
+&nbsp;                    break;
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Updates the game cycles based on the current floor number, adjusting player&#39;s attributes and multipliers
+&nbsp;     * accordingly.
+&nbsp;     * Cycles are defined as followed (and are changed every 5 floors)
+&nbsp;     * Q1 - first cycle, player gets a reduction in physical attacks for the next 5 floors.
+&nbsp;     * Q2 - second cycle, player gets their physical attack power back that was lost from Q1, and now has a 25% chance
+&nbsp;     * to take a second turn in a row during combat for the next 5 floors.
+&nbsp;     * Q3 - third cycle, player looses the chance to take a second turn in a row during combat from Q2, but now gains
+&nbsp;     * extra money for the next 5 floors.
+&nbsp;     * Q4 - fourth cycle, player looses the extra money multiplier that was given in Q3, and now gets a Temporary boost
+&nbsp;     * to all of their attributes for the next 5 turns. (Goes back to Q1)
+&nbsp;     */
+&nbsp;    public void updateCycle() {
+<b class="nc">&nbsp;        int floor = floors.getCurrentFloor();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (floor % 5 == 0) {</b>
+<b class="nc">&nbsp;            if (currentCycle == 1) {</b>
+&nbsp;                // at cycle 1, revert changes from cycle 1 and add cycle 2 changes.
+<b class="nc">&nbsp;                currentCycle = 2;</b>
+&nbsp;                // Q2 of cycle
+&nbsp;                // System.out.println(&quot;Current Floor: &quot; + floor);
+&nbsp;                // System.out.println(&quot;You hit Q2 cycle and get your physical attack power back, and now have a 25%
+&nbsp;                // chance to take &quot; + &quot;a second turn in a row!&quot;);
+&nbsp;                // System.out.println(&quot;\n\n Reverting Q1 cycle attack reduction:&quot;);
+&nbsp;                // System.out.println(&quot;Current attack:&quot; + player.getAttack());
+&nbsp;
+<b class="nc">&nbsp;                ((PlayerModifier) player).setSpecialEffectAttackBoost(10);</b>
+&nbsp;                //  System.out.println(&quot;New attack:&quot; + player.getAttack());
+&nbsp;
+<b class="nc">&nbsp;                this.secondChance = true;</b>
+<b class="nc">&nbsp;            } else if (currentCycle == 2) {</b>
+&nbsp;                // at cycle 3, revert changes from cycle 2 and add cycle 3 changes.
+<b class="nc">&nbsp;                currentCycle = 3;</b>
+&nbsp;                // Q3 of cycle
+&nbsp;                // System.out.println(&quot;Current Floor: &quot; + floor);
+&nbsp;                // System.out.println(&quot;You hit Q3 cycle and dont have a chance to take a second turn in a row, but now
+&nbsp;                // you gain extra money!&quot;);
+<b class="nc">&nbsp;                this.secondChance = false;</b>
+<b class="nc">&nbsp;                this.moneyMultiplier = 1.5;</b>
+<b class="nc">&nbsp;            } else if (currentCycle == 3) {</b>
+&nbsp;                // was at cycle 3, revert changes from cycle 3 and add cycle 4 changes.
+<b class="nc">&nbsp;                currentCycle = 4;</b>
+&nbsp;
+&nbsp;                // Q4 of cycle
+&nbsp;                // System.out.println(&quot;Current Floor: &quot; + floor);
+&nbsp;                // System.out.println(&quot;You hit Q4 cycle and get a Temporary boost to all your attributes!&quot;);
+&nbsp;                // System.out.println(&quot;Current health:&quot; + player.getHealth());
+&nbsp;                // System.out.println(&quot;Current mana:&quot; + player.getMana());
+&nbsp;                // System.out.println(&quot;Current attack:&quot; + player.getAttack());
+&nbsp;                // System.out.println(&quot;Current defense:&quot; + player.getDefense());
+<b class="nc">&nbsp;                ((PlayerModifier) player).addHealth(10);</b>
+<b class="nc">&nbsp;                ((PlayerModifier) player).addMana(5);</b>
+<b class="nc">&nbsp;                ((PlayerModifier) player).setSpecialEffectAttackBoost(10);</b>
+<b class="nc">&nbsp;                ((PlayerModifier) player).setSpecialEffectBlockBoost(10);</b>
+&nbsp;                // System.out.println(&quot;New health:&quot; + player.getHealth());
+&nbsp;                // System.out.println(&quot;New mana:&quot; + player.getMana());
+&nbsp;                // System.out.println(&quot;New attack:&quot; + player.getAttack());
+&nbsp;                // System.out.println(&quot;New defense:&quot; + player.getDefense());
+&nbsp;
+<b class="nc">&nbsp;                this.moneyMultiplier = 1.0;</b>
+<b class="nc">&nbsp;                this.secondChance = false;</b>
+<b class="nc">&nbsp;            } else if (currentCycle == 4) {</b>
+<b class="nc">&nbsp;                currentCycle = 1;</b>
+&nbsp;                // was at cycle 4, revert changes from cycle 4 and add cycle 1 changes.
+&nbsp;                // System.out.println(&quot;Current Floor: &quot; + floor);
+&nbsp;                // System.out.println(&quot;You hit Q1 cycle and get a reduction in physical attacks for the next 5 turns!&quot;);
+&nbsp;                // System.out.println(&quot;First have to undo attributes added by Q4 Cycle....&quot;);
+&nbsp;                // System.out.println(&quot;Current health:&quot; + player.getHealth());
+&nbsp;                // System.out.println(&quot;Current mana:&quot; + player.getMana());
+&nbsp;                // System.out.println(&quot;Current attack:&quot; + player.getAttack());
+&nbsp;                // System.out.println(&quot;Current defense:&quot; + player.getDefense());
+<b class="nc">&nbsp;                ((PlayerModifier) player).addHealth(-10);</b>
+<b class="nc">&nbsp;                ((PlayerModifier) player).addMana(-5);</b>
+<b class="nc">&nbsp;                ((PlayerModifier) player).setSpecialEffectAttackBoost(-10);</b>
+<b class="nc">&nbsp;                ((PlayerModifier) player).setSpecialEffectBlockBoost(-10);</b>
+&nbsp;                // System.out.println(&quot;New health:&quot; + player.getHealth());
+&nbsp;                // System.out.println(&quot;New mana:&quot; + player.getMana());
+&nbsp;                // System.out.println(&quot;New attack:&quot; + player.getAttack());
+&nbsp;                // System.out.println(&quot;New defense:&quot; + player.getDefense());
+&nbsp;
+&nbsp;                // System.out.println(&quot;\n\n Now adding Q1 cycle attack reduction:&quot;);
+&nbsp;                // System.out.println(&quot;Current attack:&quot; + player.getAttack());
+<b class="nc">&nbsp;                ((PlayerModifier) player).setSpecialEffectAttackBoost(-10);</b>
+&nbsp;                // System.out.println(&quot;New attack:&quot; + player.getAttack());
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the game is over by evaluating if the player&#39;s health is less than or equal to zero.
+&nbsp;     *
+&nbsp;     * @return true if the player&#39;s health is less than or equal to zero, false otherwise.
+&nbsp;     */
+&nbsp;    public boolean isGameOver() {
+<b class="nc">&nbsp;        return player.getHealth() &lt;= 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets a response from the user based on a prompt message.
+&nbsp;     *
+&nbsp;     * @param message the message to prompt the user.
+&nbsp;     * @return the user&#39;s response as a String.
+&nbsp;     * @throws IOException for handling I/O errors
+&nbsp;     */
+&nbsp;    public String getResponse(String message) throws IOException {
+<b class="nc">&nbsp;        Scanner scnr = new Scanner(System.in);</b>
+&nbsp;
+<b class="nc">&nbsp;        System.out.println(message);</b>
+&nbsp;
+<b class="nc">&nbsp;        String response = scnr.nextLine();</b>
+<b class="nc">&nbsp;        return response;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>

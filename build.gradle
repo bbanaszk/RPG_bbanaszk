@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'application'
+apply plugin: 'jacoco'
 
 mainClassName = 'Main'
 
@@ -20,12 +21,28 @@ repositories {
 }
 
 dependencies {
+    testImplementation 'org.mockito:mockito-core:4.0.0'
     implementation 'junit:junit:4.13.1'
     implementation files('cls/')
 }
 
 test {
     useJUnit()
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
 }
 
 apply plugin: 'checkstyle'
@@ -37,8 +54,8 @@ checkstyle {
 
 tasks.withType(Checkstyle) {
     reports {
-        html.enabled = true
-        xml.enabled = false
+        html.required.set(true)
+        xml.required.set(false)
     }
 }
 checkstyle {

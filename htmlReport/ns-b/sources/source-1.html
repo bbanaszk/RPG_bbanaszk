@@ -1,0 +1,350 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Floors</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">game.floors</a>
+</div>
+
+<h1>Coverage Summary for Class: Floors (game.floors)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Floors</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/65)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package game.floors;
+&nbsp;
+&nbsp;import game.character.Character;
+&nbsp;import game.character.charactercreate.CharacterCreator;
+&nbsp;import game.character.charactercreate.EnemyCreator;
+&nbsp;import game.character.enemy.enemytypes.Boss;
+&nbsp;import game.character.enemy.enemytypes.Medium;
+&nbsp;import game.character.enemy.enemytypes.Small;
+&nbsp;import game.decorator.CharacterDecorator;
+&nbsp;import game.decorator.EnemyModifier;
+&nbsp;import game.items.Item;
+&nbsp;import game.items.ItemGenerator;
+&nbsp;import game.items.Perk;
+&nbsp;import game.strategy.CombatStrategy;
+&nbsp;import game.strategy.DodgeDefense;
+&nbsp;import game.strategy.MagicDefense;
+&nbsp;import game.strategy.NormalAttack;
+&nbsp;import game.strategy.NormalDefense;
+&nbsp;import game.strategy.PowerAttack;
+&nbsp;import game.strategy.SpecialAttack;
+&nbsp;import game.strategy.SpecialDefense;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;/**
+&nbsp; * Manages the generation of floors in the game. Each floor generates enemies, chests, shops and combat between the
+&nbsp; * player and the generated enemy.
+&nbsp; *
+&nbsp; * @author Borys Banaszkiewicz
+&nbsp; * @version 1.0
+&nbsp; */
+&nbsp;public class Floors {
+&nbsp;    private int currentFloor;
+&nbsp;    private CharacterDecorator enemy;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for floors class. Initializes the current floor to 0.
+&nbsp;     */
+<b class="nc">&nbsp;    public Floors() {</b>
+<b class="nc">&nbsp;        this.currentFloor = 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the current floor number.
+&nbsp;     *
+&nbsp;     * @return the current floor number as an int
+&nbsp;     */
+&nbsp;    public int getCurrentFloor() {
+<b class="nc">&nbsp;        return currentFloor;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Advances to the next floor and generates a new enemy.
+&nbsp;     */
+&nbsp;    public void nextFloor() {
+<b class="nc">&nbsp;        currentFloor++;</b>
+<b class="nc">&nbsp;        this.enemy = generateEnemy();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Regenerates the current floor by generating a new enemy.
+&nbsp;     */
+&nbsp;    public void regenerateFloor() {
+<b class="nc">&nbsp;        this.enemy = generateEnemy();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates an enemy based on the current floor number. Boss enemy is generated every 10th floor, medium enemy
+&nbsp;     * every 5th floor, and small enemy for all other floors.
+&nbsp;     *
+&nbsp;     * @return the generated enemy as a CharacterDecorator.
+&nbsp;     */
+&nbsp;    public CharacterDecorator generateEnemy() {
+&nbsp;
+&nbsp;        CharacterCreator createEnemy;
+<b class="nc">&nbsp;        if (currentFloor % 10 == 0) {</b>
+&nbsp;            // boss floor
+<b class="nc">&nbsp;            createEnemy = new EnemyCreator(new Boss());</b>
+<b class="nc">&nbsp;        } else if (currentFloor % 5 == 0) {</b>
+&nbsp;            // medium enemy floor
+<b class="nc">&nbsp;            createEnemy = new EnemyCreator(new Medium());</b>
+&nbsp;        } else {
+&nbsp;            // small enemy floor
+<b class="nc">&nbsp;            createEnemy = new EnemyCreator(new Small());</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        Character enemy = createEnemy.createCharacter();</b>
+&nbsp;
+<b class="nc">&nbsp;        return new EnemyModifier(enemy);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a chest containing a random selection of items.
+&nbsp;     *
+&nbsp;     * @return a list of items contained in the chest.
+&nbsp;     */
+&nbsp;    public List&lt;Item&gt; generateChest() {
+<b class="nc">&nbsp;        ItemGenerator items = new ItemGenerator();</b>
+<b class="nc">&nbsp;        items.generateItems();</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Item&gt; allItems = items.getAllItems();</b>
+<b class="nc">&nbsp;        items.shuffleList(allItems);</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Item&gt; chest = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        Random random = new Random();</b>
+&nbsp;
+<b class="nc">&nbsp;        int count = 0;</b>
+&nbsp;
+&nbsp;        while (true) {
+<b class="nc">&nbsp;            int randomItem = random.nextInt(allItems.size());</b>
+&nbsp;
+<b class="nc">&nbsp;            if (chest.contains(allItems.get(randomItem))) {</b>
+&nbsp;                continue;
+&nbsp;            } else {
+<b class="nc">&nbsp;                chest.add(allItems.get(randomItem));</b>
+<b class="nc">&nbsp;                count++;</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            if (count == 3) {</b>
+&nbsp;                break;
+&nbsp;            }
+&nbsp;        }
+<b class="nc">&nbsp;        return chest;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a shop containing a selection of items for purchase. Has a 33% chance to include an instant level-up
+&nbsp;     * which has a legendary rarity.
+&nbsp;     *
+&nbsp;     * @return a list of items that will be available for purchase in the shop.
+&nbsp;     */
+&nbsp;    public List&lt;Item&gt; generateShop() {
+<b class="nc">&nbsp;        ItemGenerator items = new ItemGenerator();</b>
+<b class="nc">&nbsp;        items.generateItems();</b>
+<b class="nc">&nbsp;        List&lt;Item&gt; shopItems = items.getEpicItems();</b>
+<b class="nc">&nbsp;        shopItems.addAll(items.getLegendaryItems());</b>
+&nbsp;
+<b class="nc">&nbsp;        items.shuffleList(shopItems);</b>
+&nbsp;
+<b class="nc">&nbsp;        Item instantLevelUp = new Perk(&quot;Instant Level Up&quot;, &quot;Legendary&quot;, null);</b>
+<b class="nc">&nbsp;        List&lt;Item&gt; potions = items.getPotionItems();</b>
+<b class="nc">&nbsp;        items.shuffleList(potions);</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;Item&gt; shop = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        int count = 0;</b>
+<b class="nc">&nbsp;        Random random = new Random();</b>
+&nbsp;        while (true) {
+<b class="nc">&nbsp;            int randomItem = random.nextInt(shopItems.size());</b>
+&nbsp;
+<b class="nc">&nbsp;            if (shop.contains(shopItems.get(randomItem))) {</b>
+&nbsp;                continue;
+&nbsp;            } else {
+<b class="nc">&nbsp;                shop.add(shopItems.get(randomItem));</b>
+<b class="nc">&nbsp;                count++;</b>
+&nbsp;            }
+&nbsp;
+<b class="nc">&nbsp;            if (count == 3) {</b>
+&nbsp;                break;
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        int randomPotion = random.nextInt(potions.size());</b>
+<b class="nc">&nbsp;        shop.add(potions.get(randomPotion));</b>
+&nbsp;
+<b class="nc">&nbsp;        int chance = random.nextInt(100);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (chance % 3 == 0) {</b>
+<b class="nc">&nbsp;            shop.add(instantLevelUp);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            randomPotion = random.nextInt(potions.size());</b>
+<b class="nc">&nbsp;            shop.add(potions.get(randomPotion));</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return shop;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a random attack strategy.
+&nbsp;     *
+&nbsp;     * @return the generated attack strategy.
+&nbsp;     */
+&nbsp;    public CombatStrategy generateAttackStrategy() {
+<b class="nc">&nbsp;        List&lt;CombatStrategy&gt; strategies = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        strategies.add(new NormalAttack());</b>
+<b class="nc">&nbsp;        strategies.add(new PowerAttack());</b>
+<b class="nc">&nbsp;        strategies.add(new SpecialAttack());</b>
+&nbsp;
+<b class="nc">&nbsp;        Random random = new Random();</b>
+<b class="nc">&nbsp;        return strategies.get(random.nextInt(strategies.size()));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Generates a random defense strategy.
+&nbsp;     *
+&nbsp;     * @return the generated defense strategy.
+&nbsp;     */
+&nbsp;    public CombatStrategy generateDefenseStrategy() {
+<b class="nc">&nbsp;        List&lt;CombatStrategy&gt; strategies = new ArrayList&lt;&gt;();</b>
+&nbsp;
+<b class="nc">&nbsp;        strategies.add(new MagicDefense());</b>
+<b class="nc">&nbsp;        strategies.add(new NormalDefense());</b>
+<b class="nc">&nbsp;        strategies.add(new DodgeDefense());</b>
+<b class="nc">&nbsp;        strategies.add(new SpecialDefense());</b>
+&nbsp;
+<b class="nc">&nbsp;        Random random = new Random();</b>
+<b class="nc">&nbsp;        return strategies.get(random.nextInt(strategies.size()));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Drops loot from a defeated enemy.
+&nbsp;     *
+&nbsp;     * @param enemy the enemy character from which loot is dropped.
+&nbsp;     * @return the item dropped by the enemy.
+&nbsp;     */
+&nbsp;    public Item dropLoot(Character enemy) {
+<b class="nc">&nbsp;        Random random = new Random();</b>
+<b class="nc">&nbsp;        return enemy.getLoot().get(random.nextInt(enemy.getLoot().size()));</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>

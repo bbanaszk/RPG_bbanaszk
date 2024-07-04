@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Item</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">game.items</a>
+</div>
+
+<h1>Coverage Summary for Class: Item (game.items)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">Item</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package game.items;
+&nbsp;
+&nbsp;import game.specialeffects.SpecialEffect;
+&nbsp;
+&nbsp;/**
+&nbsp; * Interface that is common to all items that will be used in the game. Will be implemented by any item added to the
+&nbsp; * game.
+&nbsp; *
+&nbsp; * @author Borys Banaszkiewicz
+&nbsp; * @version 1.0
+&nbsp; */
+&nbsp;public interface Item {
+&nbsp;    /**
+&nbsp;     * Returns the item name as a string (not item type, name is the name given to an item. E.g. &quot;Rusted Sword&quot;)
+&nbsp;     *
+&nbsp;     * @return item name as a String
+&nbsp;     */
+&nbsp;    String getName();
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the item name
+&nbsp;     *
+&nbsp;     * @param name of item as a String
+&nbsp;     */
+&nbsp;    void setName(String name);
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the items tier as an int. A tier is an int from 1-5 that is used for signifying an items tier (1 being
+&nbsp;     * lowest tier and 5 being highest tier)
+&nbsp;     *
+&nbsp;     * @return item tier as an int
+&nbsp;     */
+&nbsp;    int getTier();
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the items tier as an int. A tier is an int from 1-5 that is used for signifying an items tier (1 being
+&nbsp;     * lowest tier and 5 being highest tier)
+&nbsp;     *
+&nbsp;     * @param tier of the item as an int
+&nbsp;     */
+&nbsp;    void setTier(int tier);
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the items rarity as a string. Rarity can be &quot;Common&quot;, &quot;Uncommon&quot;, &quot;Rare&quot;, &quot;Epic&quot;, or &quot;Legendary&quot; and
+&nbsp;     * aligns with an items tier (tier 1 is &quot;Common&quot; and tier 5 is &quot;Legendary&quot;)
+&nbsp;     *
+&nbsp;     * @return item rarity as a String
+&nbsp;     */
+&nbsp;    String getRarity();
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the items rarity. Rarity can be &quot;Common&quot;, &quot;Uncommon&quot;, &quot;Rare&quot;, &quot;Epic&quot;, or &quot;Legendary&quot; and aligns with an
+&nbsp;     * items tier (tier 1 is &quot;Common&quot; and tier 5 is &quot;Legendary&quot;)
+&nbsp;     *
+&nbsp;     * @param rarity of item as a String
+&nbsp;     */
+&nbsp;    void setRarity(String rarity);
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the items type name as a String.
+&nbsp;     *
+&nbsp;     * @return String for the item type name
+&nbsp;     */
+&nbsp;    String getItemName();
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Gets the characters special effects if applicable
+&nbsp;     *
+&nbsp;     * @return specialEffect, where SpecialEffect is a class created for various abilities that can be used by
+&nbsp;     *                      characters
+&nbsp;     */
+&nbsp;    SpecialEffect getSpecialEffect();
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the characters special effects if applicable
+&nbsp;     *
+&nbsp;     * @param specialEffect as a SpecialEffect object, where SpecialEffect is a class created for various abilities
+&nbsp;     *                      that can be used by characters
+&nbsp;     */
+&nbsp;    void setSpecialEffect(SpecialEffect specialEffect);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>

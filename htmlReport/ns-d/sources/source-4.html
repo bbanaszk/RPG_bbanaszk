@@ -1,0 +1,206 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > HealingEffect</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">game.specialeffects</a>
+</div>
+
+<h1>Coverage Summary for Class: HealingEffect (game.specialeffects)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HealingEffect</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package game.specialeffects;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Class for a Special Effect of type HealingEffect that implements the SpecialEffect interface.
+&nbsp; *
+&nbsp; * @author Borys Banaszkiewicz
+&nbsp; * @version 1.0
+&nbsp; */
+&nbsp;public class HealingEffect implements SpecialEffect {
+&nbsp;    private int duration;
+&nbsp;    private int healthIncreasePercentage;
+&nbsp;    private int manaCost;
+&nbsp;    private String effectName;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor of the HealingEffect Special Effect. Automatically sets the mana cost to 20.
+&nbsp;     *
+&nbsp;     * @param duration                 specifies the duration that the effect will be valid for (duration is number of
+&nbsp;     *                                 fights)
+&nbsp;     * @param healthIncreasePercentage specifies the strength multiplier of this special effect
+&nbsp;     */
+<b class="fc">&nbsp;    public HealingEffect(int duration, int healthIncreasePercentage) {</b>
+<b class="fc">&nbsp;        setDuration(duration);</b>
+<b class="fc">&nbsp;        setEffect(healthIncreasePercentage);</b>
+<b class="fc">&nbsp;        setManaCost(20);</b>
+<b class="fc">&nbsp;        setEffectName(&quot;Healing Effect&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see SpecialEffect#setEffect(int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setEffect(int effect) {
+<b class="fc">&nbsp;        this.healthIncreasePercentage = effect;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see SpecialEffect#getEffect()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getEffect() {
+<b class="fc">&nbsp;        return this.healthIncreasePercentage;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see SpecialEffect#getDuration()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getDuration() {
+<b class="fc">&nbsp;        return this.duration;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see SpecialEffect#setDuration(int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setDuration(int duration) {
+<b class="fc">&nbsp;        this.duration = duration;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see SpecialEffect#setManaCost(int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setManaCost(int manaCost) {
+<b class="fc">&nbsp;        this.manaCost = manaCost;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see SpecialEffect#getManaCost()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getManaCost() {
+<b class="fc">&nbsp;        return this.manaCost;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see SpecialEffect#setEffectName(String)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setEffectName(String effectName) {
+<b class="fc">&nbsp;        this.effectName = effectName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see SpecialEffect#getEffectName()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String getEffectName() {
+<b class="fc">&nbsp;        return effectName;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>

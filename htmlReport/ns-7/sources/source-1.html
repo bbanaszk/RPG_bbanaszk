@@ -1,0 +1,285 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Player</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">game.character.player</a>
+</div>
+
+<h1>Coverage Summary for Class: Player (game.character.player)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Player</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.1%
+  </span>
+  <span class="absValue">
+    (16/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.7%
+  </span>
+  <span class="absValue">
+    (18/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package game.character.player;
+&nbsp;
+&nbsp;import game.character.Character;
+&nbsp;import game.specialeffects.SpecialEffect;
+&nbsp;
+&nbsp;/**
+&nbsp; * Concrete product implementing character Factory interface. Responsible for creating the playable character by using a
+&nbsp; * characters type and class to generate a character with unique attributes and abilities.
+&nbsp; *
+&nbsp; * @author Borys Banaszkiewicz
+&nbsp; * @version 1.0
+&nbsp; */
+&nbsp;public class Player implements Character {
+&nbsp;    private int health;
+&nbsp;    private int attack;
+&nbsp;    private int defense;
+&nbsp;    private int mana;
+&nbsp;    private int xp;
+&nbsp;    private String typeName;
+&nbsp;    private String className;
+&nbsp;    private SpecialEffect specialEffect;
+&nbsp;
+&nbsp;    private CharacterType type;
+&nbsp;    private CharacterClass cls;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor of concrete product player that generate a character with unique attributes and abilities
+&nbsp;     *
+&nbsp;     * @param type character type to be generated
+&nbsp;     * @param cls  character class to be generated
+&nbsp;     */
+<b class="fc">&nbsp;    public Player(CharacterType type, CharacterClass cls) {</b>
+<b class="fc">&nbsp;        type.applyAttributes(this);</b>
+<b class="fc">&nbsp;        cls.applyAttributes(this);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#getHealth()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getHealth() {
+<b class="fc">&nbsp;        return health;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#setHealth(int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setHealth(int health) {
+<b class="fc">&nbsp;        this.health = health;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#getAttack()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getAttack() {
+<b class="fc">&nbsp;        return attack;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#setAttack(int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setAttack(int attack) {
+<b class="fc">&nbsp;        this.attack = attack;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#getDefense()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getDefense() {
+<b class="fc">&nbsp;        return defense;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#setDefense(int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setDefense(int defense) {
+<b class="fc">&nbsp;        this.defense = defense;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#getMana()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getMana() {
+<b class="fc">&nbsp;        return mana;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#setMana(int)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setMana(int mana) {
+<b class="fc">&nbsp;        this.mana = mana;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#getTypeName()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String getTypeName() {
+<b class="fc">&nbsp;        return typeName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#setTypeName(String)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setTypeName(String type) {
+<b class="fc">&nbsp;        this.typeName = type;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#getClassName()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public String getClassName() {
+<b class="fc">&nbsp;        return className;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#setClassName(String)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setClassName(String className) {
+<b class="fc">&nbsp;        this.className = className;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#setSpecialEffect(SpecialEffect)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setSpecialEffect(SpecialEffect specialEffect) {
+<b class="fc">&nbsp;        this.specialEffect = specialEffect;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#getSpecialEffect()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public SpecialEffect getSpecialEffect() {
+<b class="fc">&nbsp;        return specialEffect;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#getXp()
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public int getXp() {
+<b class="fc">&nbsp;        return this.xp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @see Character#setXp(int) )
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void setXp(int xp) {
+<b class="nc">&nbsp;        this.xp = xp;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>

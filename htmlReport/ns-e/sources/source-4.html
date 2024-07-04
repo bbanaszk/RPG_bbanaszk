@@ -1,0 +1,144 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > NormalDefense</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">game.strategy</a>
+</div>
+
+<h1>Coverage Summary for Class: NormalDefense (game.strategy)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NormalDefense</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package game.strategy;
+&nbsp;
+&nbsp;import game.character.Character;
+&nbsp;import game.decorator.CharacterDecorator;
+&nbsp;import game.decorator.PlayerModifier;
+&nbsp;
+&nbsp;/**
+&nbsp; * Normal Defense strategy that implements the Combat strategy interface.
+&nbsp; *
+&nbsp; * @author Borys Banaszkiewicz
+&nbsp; * @version 1.0
+&nbsp; */
+&nbsp;public class NormalDefense implements CombatStrategy {
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructor for creating the normal defense combat strategy. Sets the strategy name.
+&nbsp;     */
+<b class="nc">&nbsp;    public NormalDefense() {</b>
+<b class="nc">&nbsp;        String strategyName = &quot;Normal Defense&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Performs a normal defensive strategy to not get effected by all possible damage
+&nbsp;     *
+&nbsp;     * @param executor is the character object that is executing the combat strategy
+&nbsp;     * @param opponent is the character object that is getting the combat strategy used on them
+&nbsp;     * @see CombatStrategy#execute(Character, Character)
+&nbsp;     */
+&nbsp;    @Override
+&nbsp;    public void execute(Character executor, Character opponent) {
+<b class="nc">&nbsp;        int attackPower = executor.getAttack();</b>
+<b class="nc">&nbsp;        int opponentDefense = opponent.getDefense();</b>
+<b class="nc">&nbsp;        double attackChance = (attackPower / (double) (attackPower + opponentDefense));</b>
+<b class="nc">&nbsp;        int normalDefense = (int) (attackChance * (((PlayerModifier) opponent).getMaxHealth()));</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Normal Defense used. enemy dealt &quot; + normalDefense + &quot; damage.&quot;);</b>
+<b class="nc">&nbsp;        ((CharacterDecorator) opponent).takeDamage(normalDefense);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>

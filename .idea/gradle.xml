@@ -10,12 +10,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/src" />
-            <option value="$PROJECT_DIR$/src/Game" />
+            <option value="$PROJECT_DIR$/src/game" />
             <option value="$PROJECT_DIR$/src/main" />
-            <option value="$PROJECT_DIR$/src/main/CharacterClasses" />
-            <option value="$PROJECT_DIR$/src/main/CharacterTypes" />
-            <option value="$PROJECT_DIR$/src/main/Decorator" />
             <option value="$PROJECT_DIR$/src/main/Design" />
+            <option value="$PROJECT_DIR$/src/main/characterclasses" />
+            <option value="$PROJECT_DIR$/src/main/charactertypes" />
+            <option value="$PROJECT_DIR$/src/main/decorator" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,0 +1,612 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PlayerModifier</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">game.decorator</a>
+</div>
+
+<h1>Coverage Summary for Class: PlayerModifier (game.decorator)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PlayerModifier</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/56)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/116)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package game.decorator;
+&nbsp;
+&nbsp;import game.character.Character;
+&nbsp;import game.items.Armor;
+&nbsp;import game.items.Boots;
+&nbsp;import game.items.Gauntlet;
+&nbsp;import game.items.Helm;
+&nbsp;import game.items.Item;
+&nbsp;import game.items.Potion;
+&nbsp;import game.items.Shield;
+&nbsp;import game.items.Weapon;
+&nbsp;import game.specialeffects.BurnEffect;
+&nbsp;import game.specialeffects.FreezeEffect;
+&nbsp;import game.specialeffects.HealingEffect;
+&nbsp;import game.specialeffects.ImmunityEffect;
+&nbsp;import game.specialeffects.PoisonEffect;
+&nbsp;import game.specialeffects.SpecialEffect;
+&nbsp;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Map;
+&nbsp;
+&nbsp;/**
+&nbsp;* PlayerModifier is a decorator class that extends the CharacterDecorator abstract class. Responsible for creating a
+&nbsp;* wrapper object of the player class by overriding the &quot;getter&quot; methods from the CharacterDecorator and altering them
+&nbsp;* to return original player attributes with any additional multipliers or added benefits from leveling up or
+&nbsp;* progressing in the game without modifying the character object.
+&nbsp;*
+&nbsp;* @author Borys Banaszkiewicz
+&nbsp;* @version 1.0
+&nbsp;*/
+&nbsp;public class PlayerModifier extends CharacterDecorator {
+<b class="nc">&nbsp;    private int playerLevel = 1;</b>
+<b class="nc">&nbsp;    private int manaGained = 0;</b>
+<b class="nc">&nbsp;    private int healthGained = 0;</b>
+<b class="nc">&nbsp;    private int manaUsed = 0;</b>
+<b class="nc">&nbsp;    private int healthLost = 0;</b>
+&nbsp;    private int weaponAttack;
+&nbsp;    private int weaponBlock;
+<b class="nc">&nbsp;    private int specialEffectAttackBoost = 0;</b>
+<b class="nc">&nbsp;    private int specialEffectBlockBoost = 0;</b>
+<b class="nc">&nbsp;    private int xp = 0;</b>
+<b class="nc">&nbsp;    private double coins = 0;</b>
+<b class="nc">&nbsp;    private double attackMultiplier = 1.0;</b>
+<b class="nc">&nbsp;    private double damageMultiplier = 1.0;</b>
+<b class="nc">&nbsp;    private double originalDamageMultiplier = 1.0;</b>
+<b class="nc">&nbsp;    private final HashMap&lt;SpecialEffect, Integer&gt; specialEffects = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;    private final HashMap&lt;String, Boolean&gt; activeEffects = new HashMap&lt;&gt;();</b>
+<b class="nc">&nbsp;    private HashMap&lt;String, Item&gt; inventory = new HashMap&lt;&gt;();</b>
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * Constructor for creating a decorated player object from the character passed in as a parameter
+&nbsp;    *
+&nbsp;    * @param decoratedCharacter is the character that will be wrapped by the decorator to modify attributes
+&nbsp;    */
+&nbsp;    public PlayerModifier(Character decoratedCharacter) {
+<b class="nc">&nbsp;        super(decoratedCharacter);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * Levels up the player character by modifying the characters attackMultiplier, damageMultiplier, healthGained, and
+&nbsp;    * manaGained through wrapper variables.
+&nbsp;    * These are returned by the overridden &quot;getter&quot; methods to give the player a boost in attributes through a wrapper.
+&nbsp;    */
+&nbsp;    public void levelUp() {
+<b class="nc">&nbsp;        this.playerLevel++;</b>
+<b class="nc">&nbsp;        this.attackMultiplier += 0.05;</b>
+<b class="nc">&nbsp;        this.damageMultiplier += 0.01;</b>
+<b class="nc">&nbsp;        this.healthGained += 10;</b>
+<b class="nc">&nbsp;        this.manaGained += 5;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * Drinks a potion that is passed in as a parameter and applies any regenerative or special effects. To ensure that
+&nbsp;    * drinking the potion does not take the enemy past max health and max mana, regenerative effects are modifying the
+&nbsp;    * health and mana lost in battle to be the maximum of 0 and the difference between current lost health or mana and
+&nbsp;    * the regenerative effect.
+&nbsp;    *
+&nbsp;    * @param potion is the potion that the player is drinking
+&nbsp;    */
+&nbsp;    public void drinkPotion(Potion potion) {
+<b class="nc">&nbsp;        healthLost = Math.max(0, healthLost - potion.getHealAmount());</b>
+<b class="nc">&nbsp;        manaUsed = Math.max(0, manaUsed - potion.getManaAmount());</b>
+<b class="nc">&nbsp;        if (potion.getSpecialEffect() != null) {</b>
+<b class="nc">&nbsp;            addSpecialEffect(potion.getSpecialEffect());</b>
+<b class="nc">&nbsp;            applyEffect(potion.getSpecialEffect());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        removeItemFromInventory(&quot;Potion&quot;);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * Returns the players current inventory
+&nbsp;    *
+&nbsp;    * @return hashmap as the inventory where key is the item type (Weapon, Armor, Potion, etc.) and the value is the
+&nbsp;     *                              item itself of type Item
+&nbsp;    */
+&nbsp;    public HashMap&lt;String, Item&gt; getInventory() {
+<b class="nc">&nbsp;        return this.inventory;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * Updates the players current inventory to add the item to the players inventory if it doesn&#39;t exist yet, or
+&nbsp;    * exchange the item if it exists
+&nbsp;    *
+&nbsp;    * @param type is the item type (Weapon, Armor, Potion, etc.) as a String
+&nbsp;    * @param item is the item itself as type Item
+&nbsp;    */
+&nbsp;    public void updateInventory(String type, Item item) {
+<b class="nc">&nbsp;        this.inventory.put(type, item);</b>
+<b class="nc">&nbsp;        updateAttackPower();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * removes item from inventory
+&nbsp;    *
+&nbsp;    * @param type is the item type (Weapon, Armor, Potion, etc.) as a String that is to be removed from inventory
+&nbsp;    */
+&nbsp;    public void removeItemFromInventory(String type) {
+<b class="nc">&nbsp;        this.inventory.remove(type);</b>
+<b class="nc">&nbsp;        updateAttackPower();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * gets the players current special effects
+&nbsp;    *
+&nbsp;    * @return hashmap as the special effects that are active where key is the SpecialEffect and value is an Integer for
+&nbsp;     *                          the duration of the effect
+&nbsp;    */
+&nbsp;    public HashMap&lt;SpecialEffect, Integer&gt; getSpecialEffects() {
+<b class="nc">&nbsp;        return this.specialEffects;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * add a new special effect to the players current special effects
+&nbsp;    *
+&nbsp;    * @param effect as a SpecialEffect Object that is to be added to the players special effects.
+&nbsp;    */
+&nbsp;    public void addSpecialEffect(SpecialEffect effect) {
+<b class="nc">&nbsp;        this.specialEffects.put(effect, effect.getDuration());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * activates the special effect passed in as a parameter
+&nbsp;    *
+&nbsp;    * @param effect as a SpecialEffect Object that is to be activated for the player
+&nbsp;    */
+&nbsp;    private void applyEffect(SpecialEffect effect) {
+<b class="nc">&nbsp;        if (activeEffects.containsKey(effect.getEffectName()) &amp;&amp; activeEffects.get(effect.getEffectName())) {</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (effect instanceof BurnEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Burn Effect&quot;, true);</b>
+<b class="nc">&nbsp;            specialEffectAttackBoost += effect.getEffect();</b>
+<b class="nc">&nbsp;        } else if (effect instanceof FreezeEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Freeze Effect&quot;, true);</b>
+<b class="nc">&nbsp;            specialEffectAttackBoost += effect.getEffect();</b>
+<b class="nc">&nbsp;        } else if (effect instanceof HealingEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Healing Effect&quot;, true);</b>
+<b class="nc">&nbsp;            healthLost = Math.max(0, healthLost - effect.getEffect());</b>
+<b class="nc">&nbsp;        } else if (effect instanceof ImmunityEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Immunity Effect&quot;, true);</b>
+<b class="nc">&nbsp;            originalDamageMultiplier = damageMultiplier;</b>
+<b class="nc">&nbsp;            damageMultiplier = 0.0;</b>
+<b class="nc">&nbsp;        } else if (effect instanceof PoisonEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Poison Effect&quot;, true);</b>
+<b class="nc">&nbsp;            specialEffectAttackBoost += effect.getEffect();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * Deactivates/removes the special effect passed in as a parameter
+&nbsp;    *
+&nbsp;    * @param effect as a SpecialEffect Object that is to be Deactivated/removed for the player
+&nbsp;    */
+&nbsp;    private void removeEffect(SpecialEffect effect) {
+<b class="nc">&nbsp;        if (activeEffects.containsKey(effect.getEffectName()) &amp;&amp; !activeEffects.get(effect.getEffectName())) {</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (effect instanceof BurnEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Burn Effect&quot;, false);</b>
+<b class="nc">&nbsp;            specialEffectAttackBoost -= effect.getEffect();</b>
+<b class="nc">&nbsp;        } else if (effect instanceof FreezeEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Freeze Effect&quot;, false);</b>
+<b class="nc">&nbsp;            specialEffectAttackBoost -= effect.getEffect();</b>
+<b class="nc">&nbsp;        } else if (effect instanceof ImmunityEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Immunity Effect&quot;, false);</b>
+<b class="nc">&nbsp;            damageMultiplier = originalDamageMultiplier;</b>
+<b class="nc">&nbsp;        } else if (effect instanceof PoisonEffect) {</b>
+<b class="nc">&nbsp;            activeEffects.put(&quot;Poison Effect&quot;, false);</b>
+<b class="nc">&nbsp;            specialEffectAttackBoost -= effect.getEffect();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * adds xp earned for the player
+&nbsp;    *
+&nbsp;    * @param xp as an int for amount of xp gained/lost (negative values passed for lost xp)
+&nbsp;    */
+&nbsp;    public void addXp(int xp) {
+<b class="nc">&nbsp;        this.xp += xp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * adds coins earned for the player
+&nbsp;    *
+&nbsp;    * @param coins as a double for amount of coins gained/lost (negative values passed for lost coins)
+&nbsp;    */
+&nbsp;    public void addCoins(double coins) {
+<b class="nc">&nbsp;        this.coins += coins;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * gets the players maximum possible health (not current health). Maximum health is the players original health plus
+&nbsp;    * any health gained from leveling up.
+&nbsp;    *
+&nbsp;    * @return int for the players maximum health.
+&nbsp;    */
+&nbsp;    public int getMaxHealth() {
+<b class="nc">&nbsp;        return super.getHealth() + healthGained;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * resets the players current health to be max. Any deviation of health from the max health is just healthLost
+&nbsp;    * wrapper variable, so this method sets healthLost to 0.
+&nbsp;    */
+&nbsp;    public void resetHealth() {
+<b class="nc">&nbsp;        this.healthLost = 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * adds health to the healthGained wrapper variable to increase maximum player health.
+&nbsp;    *
+&nbsp;    * @param health as an int for how much health to add
+&nbsp;    */
+&nbsp;    public void addHealth(int health) {
+<b class="nc">&nbsp;        healthGained += health;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * adds mana to the manaGained wrapper variable to increase maximum player mana.
+&nbsp;    *
+&nbsp;    * @param mana as an int for how much mana to add
+&nbsp;    */
+&nbsp;    public void addMana(int mana) {
+<b class="nc">&nbsp;        manaGained += mana;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * uses mana by adding mana amount to the manaUsed wrapper variable. The check for using mana and if player has
+&nbsp;    * enough mana is in the method call during gameplay.
+&nbsp;    *
+&nbsp;    * @param manaUsed as an int for how much mana was used
+&nbsp;    */
+&nbsp;    public void useMana(int manaUsed) {
+<b class="nc">&nbsp;        this.manaUsed += manaUsed;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * resets the players current mana to be max. Any deviation of mana from the max mana is just manaUsed wrapper
+&nbsp;    * variable, so this method sets manaUsed to 0.
+&nbsp;    */
+&nbsp;    public void resetMana() {
+<b class="nc">&nbsp;        this.manaUsed = 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * iterates through the players inventory and updates their attributes based on items that they have equipped. For
+&nbsp;    * Weapons, players attack power is raised, for any wearable items (Armor, Boots, Helm, Gauntlet) and Shields the
+&nbsp;    * players defense is raised. Potions and Coins are not managed here.
+&nbsp;    */
+&nbsp;    public void updateAttackPower() {
+<b class="nc">&nbsp;        this.weaponAttack = 0;</b>
+<b class="nc">&nbsp;        this.weaponBlock = 0;</b>
+<b class="nc">&nbsp;        for (Map.Entry&lt;String, Item&gt; items : inventory.entrySet()) {</b>
+<b class="nc">&nbsp;            String itemName = items.getKey();</b>
+<b class="nc">&nbsp;            Item item = items.getValue();</b>
+<b class="nc">&nbsp;            if (itemName.equals(&quot;Armor&quot;)) {</b>
+<b class="nc">&nbsp;                weaponBlock += ((Armor) item).getDefenseValue();</b>
+<b class="nc">&nbsp;                if (item.getSpecialEffect() != null) {</b>
+<b class="nc">&nbsp;                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            if (itemName.equals(&quot;Boots&quot;)) {</b>
+<b class="nc">&nbsp;                weaponBlock += ((Boots) item).getDefenseValue();</b>
+<b class="nc">&nbsp;                if (item.getSpecialEffect() != null) {</b>
+<b class="nc">&nbsp;                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            if (itemName.equals(&quot;Gauntlet&quot;)) {</b>
+<b class="nc">&nbsp;                weaponBlock += ((Gauntlet) item).getDefenseValue();</b>
+<b class="nc">&nbsp;                if (item.getSpecialEffect() != null) {</b>
+<b class="nc">&nbsp;                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            if (itemName.equals(&quot;Helm&quot;)) {</b>
+<b class="nc">&nbsp;                weaponBlock += ((Helm) item).getDefenseValue();</b>
+<b class="nc">&nbsp;                if (item.getSpecialEffect() != null) {</b>
+<b class="nc">&nbsp;                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            if (itemName.equals(&quot;Shield&quot;)) {</b>
+<b class="nc">&nbsp;                weaponBlock += ((Shield) item).getDefenseValue();</b>
+<b class="nc">&nbsp;                if (item.getSpecialEffect() != null) {</b>
+<b class="nc">&nbsp;                    specialEffectBlockBoost += item.getSpecialEffect().getEffect();</b>
+&nbsp;                }
+&nbsp;            }
+<b class="nc">&nbsp;            if (itemName.equals(&quot;Weapon&quot;)) {</b>
+<b class="nc">&nbsp;                if (((Weapon) item).isTwoHanded()) {</b>
+<b class="nc">&nbsp;                    weaponBlock += ((Weapon) item).getDamageValue();</b>
+<b class="nc">&nbsp;                    weaponAttack += ((Weapon) item).getDamageValue();</b>
+&nbsp;                } else {
+<b class="nc">&nbsp;                    weaponAttack += ((Weapon) item).getDamageValue();</b>
+&nbsp;                }
+<b class="nc">&nbsp;                if (item.getSpecialEffect() != null) {</b>
+<b class="nc">&nbsp;                    specialEffectAttackBoost += item.getSpecialEffect().getEffect();</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * sets the attack boost that is gained from activating a special effect.
+&nbsp;    *
+&nbsp;    * @param effect as an int for how much to increase the special effect attack boost.
+&nbsp;    */
+&nbsp;    public void setSpecialEffectAttackBoost(int effect) {
+<b class="nc">&nbsp;        specialEffectAttackBoost += effect;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * sets the block boost that is gained from activating a special effect.
+&nbsp;    *
+&nbsp;    * @param effect as an int for how much to increase the special effect block boost.
+&nbsp;    */
+&nbsp;    public void setSpecialEffectBlockBoost(int effect) {
+<b class="nc">&nbsp;        specialEffectBlockBoost += effect;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * gets the players current level as an int
+&nbsp;    *
+&nbsp;    * @return int for the players current level
+&nbsp;    */
+&nbsp;    public int getPlayerLevel() {
+<b class="nc">&nbsp;        return playerLevel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#getCoins()
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public double getCoins() {
+<b class="nc">&nbsp;        return super.getCoins() + coins;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#getLoot()
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public List&lt;Item&gt; getLoot() {
+<b class="nc">&nbsp;        return decoratedCharacter.getLoot();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#setLoot(List)
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public void setLoot(List&lt;Item&gt; loot) {
+<b class="nc">&nbsp;        decoratedCharacter.setLoot(loot);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#getXp()
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public int getXp() {
+<b class="nc">&nbsp;        return xp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#getAttack()
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public int getAttack() {
+<b class="nc">&nbsp;        return (int) ((super.getAttack() + weaponAttack + specialEffectAttackBoost) * attackMultiplier);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#getDefense()
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public int getDefense() {
+<b class="nc">&nbsp;        return (int) ((super.getDefense() + weaponBlock + specialEffectBlockBoost) * damageMultiplier);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#getMana()
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public int getMana() {
+<b class="nc">&nbsp;        return Math.max(0, super.getMana() + manaGained - manaUsed);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#getHealth()
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public int getHealth() {
+<b class="nc">&nbsp;        return Math.max(0, super.getHealth() + healthGained - healthLost);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;    * @see CharacterDecorator#takeDamage(int)
+&nbsp;    */
+&nbsp;    @Override
+&nbsp;    public void takeDamage(int damageAmount) {
+<b class="nc">&nbsp;        this.healthLost += damageAmount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Not sure if I should remove or keep all methods below?
+&nbsp;    //    public int getMaxMana() {
+&nbsp;    //        return super.getMana() + manaGained;
+&nbsp;    //    }
+&nbsp;    //
+&nbsp;    //    public void applyEffects() {
+&nbsp;    //        Stack&lt;SpecialEffect&gt; effectsToRemove = new Stack&lt;&gt;();
+&nbsp;    //        for (Map.Entry&lt;SpecialEffect, Integer&gt; effects : new HashMap&lt;&gt;(specialEffects).entrySet()) {
+&nbsp;    //            applyEffect(effects.getKey());
+&nbsp;    //            int duration = effects.getValue() - 1;
+&nbsp;    //            if (duration == 0) {
+&nbsp;    //                effectsToRemove.push(effects.getKey());
+&nbsp;    //            } else {
+&nbsp;    //                specialEffects.put(effects.getKey(), duration);
+&nbsp;    //            }
+&nbsp;    //        }
+&nbsp;    //
+&nbsp;    //        while (!effectsToRemove.isEmpty()) {
+&nbsp;    //            SpecialEffect effect = effectsToRemove.pop();
+&nbsp;    //            removeEffect(effect);
+&nbsp;    //            specialEffects.remove(effect);
+&nbsp;    //        }
+&nbsp;    //    }
+&nbsp;    //
+&nbsp;    //    public void setInventory(HashMap&lt;String, Item&gt; inventory) {
+&nbsp;    //        this.inventory = inventory;
+&nbsp;    //        updateAttackPower();
+&nbsp;    //    }
+&nbsp;    //
+&nbsp;    //    public void setAttackMultiplier(double multiplier) {
+&nbsp;    //        attackMultiplier = multiplier;
+&nbsp;    //    }
+&nbsp;    //
+&nbsp;    //    public double getAttackMultiplier() {
+&nbsp;    //        return attackMultiplier;
+&nbsp;    //    }
+&nbsp;    //
+&nbsp;    //    public void setDamageMultiplier(double multiplier) {
+&nbsp;    //        damageMultiplier = multiplier;
+&nbsp;    //    }
+&nbsp;    //
+&nbsp;    //    public double getDamageMultiplier() {
+&nbsp;    //        return damageMultiplier;
+&nbsp;    //    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>

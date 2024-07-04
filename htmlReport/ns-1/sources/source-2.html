@@ -1,0 +1,490 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Main</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: Main (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Main</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import game.character.Character;
+&nbsp;import game.character.charactercreate.CharacterCreator;
+&nbsp;import game.character.charactercreate.PlayerCreator;
+&nbsp;import game.character.enemy.EnemyType;
+&nbsp;import game.character.enemy.enemytypes.Boss;
+&nbsp;import game.character.enemy.enemytypes.Medium;
+&nbsp;import game.character.enemy.enemytypes.Small;
+&nbsp;import game.character.player.CharacterClass;
+&nbsp;import game.character.player.CharacterType;
+&nbsp;import game.character.player.characterclasses.Bandit;
+&nbsp;import game.character.player.characterclasses.Barbarian;
+&nbsp;import game.character.player.characterclasses.Mage;
+&nbsp;import game.character.player.characterclasses.Samurai;
+&nbsp;import game.character.player.characterclasses.Sorcerer;
+&nbsp;import game.character.player.characterclasses.Warrior;
+&nbsp;import game.character.player.charactertypes.Dwarf;
+&nbsp;import game.character.player.charactertypes.Elf;
+&nbsp;import game.character.player.charactertypes.Human;
+&nbsp;import game.character.player.charactertypes.Orc;
+&nbsp;import game.decorator.PlayerModifier;
+&nbsp;import game.floors.GamePlay;
+&nbsp;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;/**
+&nbsp; * Controls main program execution.
+&nbsp; *
+&nbsp; * @author Borys Banaszkiewicz
+&nbsp; * @version 1.0
+&nbsp; */
+<b class="nc">&nbsp;public class Main {</b>
+&nbsp;    /**
+&nbsp;     * main for running program.
+&nbsp;     * @param args arguments passed to main
+&nbsp;     */
+&nbsp;    public static void main(String[] args) {
+<b class="nc">&nbsp;        System.out.println(&quot;Hello World!&quot;);</b>
+<b class="nc">&nbsp;        CharacterClass[] classes = {</b>
+&nbsp;            new Bandit(), new Barbarian(), new Mage(), new Samurai(), new Sorcerer(), new Warrior()
+&nbsp;        };
+&nbsp;
+<b class="nc">&nbsp;        CharacterType[] types = {</b>
+&nbsp;            new Dwarf(), new Elf(), new Human(), new Orc()
+&nbsp;        };
+&nbsp;
+<b class="nc">&nbsp;        Random random = new Random();</b>
+&nbsp;
+<b class="nc">&nbsp;        CharacterCreator createPlayer = new PlayerCreator(types[random.nextInt(types.length)],</b>
+<b class="nc">&nbsp;                classes[random.nextInt(classes.length)]);</b>
+<b class="nc">&nbsp;        Character playerInit = createPlayer.createCharacter();</b>
+<b class="nc">&nbsp;        PlayerModifier player = new PlayerModifier(playerInit);</b>
+&nbsp;
+<b class="nc">&nbsp;        EnemyType[] enemyTypes = {</b>
+&nbsp;            new Small(), new Medium(), new Boss()
+&nbsp;        };
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        GamePlay game = new GamePlay(player);</b>
+<b class="nc">&nbsp;        int inc = 0;</b>
+<b class="nc">&nbsp;        while (!game.isGameOver()) {</b>
+<b class="nc">&nbsp;            game.updateGameState();</b>
+<b class="nc">&nbsp;            inc++;</b>
+&nbsp;        }
+&nbsp;
+&nbsp;
+&nbsp;        // System.out.println(&quot;You survived &quot; + inc + &quot; rounds!&quot;);
+&nbsp;        // System.out.println(&quot;Max health is: &quot; + player.getMaxHealth());
+&nbsp;        // CharacterCreator createEnemy = new EnemyCreator(new Small());
+&nbsp;        // character enemyInit = createEnemy.createCharacter();
+&nbsp;        // EnemyModifier enemySmall = new EnemyModifier(enemyInit);
+&nbsp;        // createEnemy = new EnemyCreator(new Medium());
+&nbsp;        // enemyInit = createEnemy.createCharacter();
+&nbsp;        // EnemyModifier enemyMedium = new EnemyModifier(enemyInit);
+&nbsp;        // createEnemy = new EnemyCreator(new Boss());
+&nbsp;        // enemyInit = createEnemy.createCharacter();
+&nbsp;        // EnemyModifier enemyBoss = new EnemyModifier(enemyInit);
+&nbsp;
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;
+&nbsp;        // System.out.println(&quot;\nGenerated a new character with the following stats after 10 level ups:&quot;);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + player.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + player.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + player.getHealth());
+&nbsp;        // System.out.println(&quot;\t Mana: &quot; + player.getMana());
+&nbsp;        // System.out.println(&quot;\t Class: &quot; + player.getClassName());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + player.getTypeName());
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Small enemy generated with 8 level ups and the following stats: &quot;);
+&nbsp;        // enemySmall.levelUp(8);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + enemySmall.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + enemySmall.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + enemySmall.getHealth());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + enemySmall.getTypeName());
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Medium enemy generated with 2 level ups and the following stats: &quot;);
+&nbsp;        // enemyMedium.levelUp(2);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + enemyMedium.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + enemyMedium.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + enemyMedium.getHealth());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + enemyMedium.getTypeName());
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Boss enemy generated with 1 level up and the following stats: &quot;);
+&nbsp;        // enemyBoss.levelUp(1);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + enemyBoss.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + enemyBoss.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + enemyBoss.getHealth());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + enemyBoss.getTypeName());
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // List&lt;CombatStrategy&gt; attackStrategies = new ArrayList&lt;&gt;();
+&nbsp;        // Random randomAttack = new Random();
+&nbsp;        //
+&nbsp;        // attackStrategies.add(new NormalAttack());
+&nbsp;        // attackStrategies.add(new PowerAttack());
+&nbsp;        // attackStrategies.add(new SpecialAttack());
+&nbsp;        //
+&nbsp;        // List&lt;CombatStrategy&gt; defenseStrategies = new ArrayList&lt;&gt;();
+&nbsp;        // Random randomDefense = new Random();
+&nbsp;        //
+&nbsp;        // defenseStrategies.add(new MagicDefense());
+&nbsp;        // defenseStrategies.add(new NormalDefense());
+&nbsp;        // defenseStrategies.add(new DodgeDefense());
+&nbsp;        // defenseStrategies.add(new SpecialDefense());
+&nbsp;        //
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        // player.levelUp();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;\nGenerated a new character with the following stats after 10 level ups:&quot;);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + player.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + player.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + player.getHealth());
+&nbsp;        // System.out.println(&quot;\t Mana: &quot; + player.getMana());
+&nbsp;        // System.out.println(&quot;\t Class: &quot; + player.getClassName());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + player.getTypeName());
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Small enemy generated with the following stats: &quot;);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + enemySmall.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + enemySmall.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + enemySmall.getHealth());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + enemySmall.getTypeName());
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Medium enemy generated with the following stats: &quot;);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + enemyMedium.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + enemyMedium.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + enemyMedium.getHealth());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + enemyMedium.getTypeName());
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Boss enemy generated with the following stats: &quot;);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + enemyBoss.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + enemyBoss.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + enemyBoss.getHealth());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + enemyBoss.getTypeName());
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Chance of hurting opponent is [Attacker&#39;s Offensive Score] /
+&nbsp;        // ( [Attacker&#39;s Offensive Score] + [Defender&#39;s Defensive Score] )&quot;);
+&nbsp;        // double chanceSmall = (player.getAttack() / (double)(player.getAttack() + enemySmall.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for small: &quot; + chanceSmall);
+&nbsp;        // double playerChance = (enemySmall.getAttack() / (double)(enemySmall.getAttack() + player.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for enemy small: &quot; + playerChance);
+&nbsp;        // System.out.println(&quot;Damage done from doing % of chance and max health of enemy&quot;);
+&nbsp;        // System.out.println(&quot;Damage done: &quot; + (chanceSmall * enemySmall.getMaxHealth()));
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Damage taken:&quot; + (playerChance * player.getMaxHealth()));
+&nbsp;        //
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println();
+&nbsp;        // double chanceMedium = (player.getAttack() / (double)(player.getAttack() + enemyMedium.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for medium: &quot; + chanceMedium);
+&nbsp;        // playerChance = (enemyMedium.getAttack() / (double)(enemyMedium.getAttack() + player.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for enemy medium: &quot; + playerChance);
+&nbsp;        // System.out.println(&quot;Damage done from doing % of chance and max health of enemy&quot;);
+&nbsp;        // System.out.println(&quot;Damage done: &quot; + (chanceMedium * enemyMedium.getMaxHealth()));
+&nbsp;        // playerChance = (enemyMedium.getAttack() / (double)(enemyMedium.getAttack() + player.getDefense()));
+&nbsp;        // System.out.println(&quot;Damage taken:&quot; + (playerChance * player.getMaxHealth()));
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println();
+&nbsp;        // double chanceBoss = (player.getAttack() / (double)(player.getAttack() + enemyBoss.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for Boss: &quot; + chanceBoss);
+&nbsp;        // playerChance = (enemyBoss.getAttack() / (double)(enemyBoss.getAttack() + player.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for enemy Boss: &quot; + playerChance);
+&nbsp;        // System.out.println(&quot;Damage done from doing % of chance and max health of enemy&quot;);
+&nbsp;        // System.out.println(&quot;Damage done: &quot; + (chanceBoss * enemyBoss.getMaxHealth()));
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Damage taken:&quot; + (playerChance * player.getMaxHealth()));
+&nbsp;        //
+&nbsp;        // enemySmall.levelUp(10);
+&nbsp;        // enemyMedium.levelUp(10);
+&nbsp;        // enemyBoss.levelUp(10);
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;After leveling enemy up 10 times:&quot;);
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Chance of hurting opponent is [Attacker&#39;s Offensive Score] /
+&nbsp;        // ( [Attacker&#39;s Offensive Score] + [Defender&#39;s Defensive Score] )&quot;);
+&nbsp;        // chanceSmall = (player.getAttack() / (double)(player.getAttack() + enemySmall.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for small: &quot; + chanceSmall);
+&nbsp;        // playerChance = (enemySmall.getAttack() / (double)(enemySmall.getAttack() + player.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for enemy small: &quot; + playerChance);
+&nbsp;        // System.out.println(&quot;Damage done from doing % of chance and max health of enemy&quot;);
+&nbsp;        // System.out.println(&quot;Damage done: &quot; + (chanceSmall * enemySmall.getMaxHealth()));
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Damage taken:&quot; + (playerChance * player.getMaxHealth()));
+&nbsp;        //
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println();
+&nbsp;        // chanceMedium = (player.getAttack() / (double)(player.getAttack() + enemyMedium.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for medium: &quot; + chanceMedium);
+&nbsp;        // playerChance = (enemyMedium.getAttack() / (double)(enemyMedium.getAttack() + player.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for enemy medium: &quot; + playerChance);
+&nbsp;        // System.out.println(&quot;Damage done from doing % of chance and max health of enemy&quot;);
+&nbsp;        // System.out.println(&quot;Damage done: &quot; + (chanceMedium * enemyMedium.getMaxHealth()));
+&nbsp;        // playerChance = (enemyMedium.getAttack() / (double)(enemyMedium.getAttack() + player.getDefense()));
+&nbsp;        // System.out.println(&quot;Damage taken:&quot; + (playerChance * player.getMaxHealth()));
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println();
+&nbsp;        // chanceBoss = (player.getAttack() / (double)(player.getAttack() + enemyBoss.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for Boss: &quot; + chanceBoss);
+&nbsp;        // playerChance = (enemyBoss.getAttack() / (double)(enemyBoss.getAttack() + player.getDefense()));
+&nbsp;        // System.out.println(&quot;Chance for enemy Boss: &quot; + playerChance);
+&nbsp;        // System.out.println(&quot;Damage done from doing % of chance and max health of enemy&quot;);
+&nbsp;        // System.out.println(&quot;Damage done: &quot; + (chanceBoss * enemyBoss.getMaxHealth()));
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Damage taken:&quot; + (playerChance * player.getMaxHealth()));
+&nbsp;        // for (int i = 0; i &lt; 10; i++) {
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;\nGenerated a new character with the following stats:&quot;);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + player.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + player.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + player.getHealth());
+&nbsp;        // System.out.println(&quot;\t Mana: &quot; + player.getMana());
+&nbsp;        // System.out.println(&quot;\t Class: &quot; + player.getClassName());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + player.getTypeName());
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Executing attack on small enemy. enemy has &quot; + enemySmall.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalAttack().execute(player, enemySmall);
+&nbsp;        // System.out.println(&quot;enemy has &quot; + enemySmall.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println(&quot;enemy executing attack on player. player has &quot; + player.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalDefense().execute(enemySmall, player);
+&nbsp;        // System.out.println(&quot;player has &quot; + player.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        //
+&nbsp;        // player.resetMana();
+&nbsp;        // player.resetHealth();
+&nbsp;        // enemySmall.resetHealth();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Executing attack on medium enemy. enemy has &quot; + enemyMedium.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalAttack().execute(player, enemyMedium);
+&nbsp;        // System.out.println(&quot;enemy has &quot; + enemyMedium.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println(&quot;enemy executing attack on player. player has &quot; + player.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalDefense().execute(enemyMedium, player);
+&nbsp;        // System.out.println(&quot;player has &quot; + player.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // player.resetMana();
+&nbsp;        // player.resetHealth();
+&nbsp;        // enemyMedium.resetHealth();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Executing attack on boss enemy. enemy has &quot; + enemyBoss.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalAttack().execute(player, enemyBoss);
+&nbsp;        // System.out.println(&quot;enemy has &quot; + enemyBoss.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println(&quot;enemy executing attack on player. player has &quot; + player.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalDefense().execute(enemyBoss, player);
+&nbsp;        // System.out.println(&quot;player has &quot; + player.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // player.resetMana();
+&nbsp;        // player.resetHealth();
+&nbsp;        // enemyBoss.resetHealth();
+&nbsp;        //
+&nbsp;        // HashMap&lt;String, Item&gt; inventory = player.getInventory();
+&nbsp;        //
+&nbsp;        // ItemGenerator items = new ItemGenerator();
+&nbsp;        // items.generateItems();
+&nbsp;        //
+&nbsp;        // List&lt;Item&gt; legItems = items.getLegendaryItems();
+&nbsp;        //
+&nbsp;        // for (Item item : legItems) {
+&nbsp;        //     if (!inventory.containsKey(item.getItemName())) {
+&nbsp;        //         inventory.put(item.getItemName(), item);
+&nbsp;        //     }
+&nbsp;        // }
+&nbsp;        // player.setInventory(inventory);
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;New player stats after getting geared up&quot;);
+&nbsp;        // System.out.println(&quot;\t Attack: &quot; + player.getAttack());
+&nbsp;        // System.out.println(&quot;\t Defense: &quot; + player.getDefense());
+&nbsp;        // System.out.println(&quot;\t Health: &quot; + player.getHealth());
+&nbsp;        // System.out.println(&quot;\t Mana: &quot; + player.getMana());
+&nbsp;        // System.out.println(&quot;\t Class: &quot; + player.getClassName());
+&nbsp;        // System.out.println(&quot;\t Type: &quot; + player.getTypeName());
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Executing attack on enemy. enemy has &quot; + enemySmall.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalAttack().execute(player, enemySmall);
+&nbsp;        // System.out.println(&quot;enemy has &quot; + enemySmall.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println(&quot;enemy executing attack on player. player has &quot; + player.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalDefense().execute(enemySmall, player);
+&nbsp;        // System.out.println(&quot;player has &quot; + player.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        //
+&nbsp;        // player.resetMana();
+&nbsp;        // player.resetHealth();
+&nbsp;        // enemySmall.resetHealth();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Executing attack on medium enemy. enemy has &quot; + enemyMedium.getHealth() + &quot; health
+&nbsp;        // before attack.&quot;);
+&nbsp;        // new NormalAttack().execute(player, enemyMedium);
+&nbsp;        // System.out.println(&quot;enemy has &quot; + enemyMedium.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println(&quot;enemy executing attack on player. player has &quot; + player.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalDefense().execute(enemyMedium, player);
+&nbsp;        // System.out.println(&quot;player has &quot; + player.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // player.resetMana();
+&nbsp;        // player.resetHealth();
+&nbsp;        // enemyMedium.resetHealth();
+&nbsp;        //
+&nbsp;        // System.out.println(&quot;Executing attack on boss enemy. enemy has &quot; + enemyBoss.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalAttack().execute(player, enemyBoss);
+&nbsp;        // System.out.println(&quot;enemy has &quot; + enemyBoss.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        // System.out.println(&quot;enemy executing attack on player. player has &quot; + player.getHealth() + &quot; health before
+&nbsp;        // attack.&quot;);
+&nbsp;        // new NormalDefense().execute(enemyBoss, player);
+&nbsp;        // System.out.println(&quot;player has &quot; + player.getHealth() + &quot; health after attack.&quot;);
+&nbsp;        // System.out.println();
+&nbsp;        //
+&nbsp;        // player.resetMana();
+&nbsp;        // player.resetHealth();
+&nbsp;        // enemyBoss.resetHealth();
+&nbsp;        //     System.out.println();
+&nbsp;        //     AddDelay.sleep(1000);
+&nbsp;        // }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-07-03 17:40</div>
+</div>
+</body>
+</html>
