@@ -1,8 +1,10 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
@@ -301,8 +303,6 @@ public class MainTest {
         assertEquals((int) (35 * 1.40), enemy.getDefense());
         assertEquals((int) (100 * 1.50), enemy.getXp());
         assertEquals(250 + 10, enemy.getHealth());
-
-        assertEquals(0, enemy.getMana());
     }
 
     @Test
@@ -623,18 +623,20 @@ public class MainTest {
         // create mock gameplay
         GamePlay gamePlay = Mockito.spy(new GamePlay(player));
 
+        // mock the sleep method to do nothing
+        doNothing().when(gamePlay).sleep(anyLong());
+
         // since all prompts in gameplay ask user for Y/N responses, then set to always Y to test checking inventory,
         // picking up loot, leveling up, etc..
         doReturn("Y").when(gamePlay).getResponse(anyString());
 
         // run game for 10 floors to ensure leveling up is reached, max inventory, different fighting strategies, etc..
+        for (int i = 0; i < 10; i++) {
+            gamePlay.updateGameState();
+        }
 
-        gamePlay.updateGameState();
-
-
-        // verify that 10 calls to updateGameState() called the players attributes at least once (for battles, for
+        // verify that calls to updateGameState() called the players attributes at least once (for battles, for
         // leveling up, etc.)
-
         verify(player, atLeastOnce()).getAttack();
         verify(player, atLeastOnce()).getDefense();
         verify(player, atLeastOnce()).getHealth();

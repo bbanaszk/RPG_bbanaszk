@@ -105,14 +105,13 @@ public class GamePlay implements FloorMediator {
             System.out.println();
         }
 
-
         HashMap<SpecialEffect, Integer> specialEffects = ((PlayerModifier) player).getSpecialEffects();
 
         if (specialEffects != null && !specialEffects.isEmpty() && player.getMana() > 0) {
             message = "N";
 
             try {
-                message = getResponse("Looks like you have some special effects, would you like to use them? Enter Y/N");
+                message = getResponse("You have some special effects available, would you like to use them? Enter Y/N");
             } catch (IOException ioe) {
                 System.out.println("Something went wrong");
             }
@@ -144,7 +143,7 @@ public class GamePlay implements FloorMediator {
             }
         }
         System.out.println();
-            // HashMap<SpecialEffect, Integer> specialEffects = ((PlayerModifier) player).getSpecialEffects();
+        // HashMap<SpecialEffect, Integer> specialEffects = ((PlayerModifier) player).getSpecialEffects();
 
         //     if (!specialEffects.isEmpty()) {
         //
@@ -308,8 +307,8 @@ public class GamePlay implements FloorMediator {
             int xp = enemy.getXp();
             double moneyDropped = enemy.getCoins() * moneyMultiplier;
             int mana = enemy.getMana();
-            System.out.println("You have successfully beat the enemy and get " + xp + " xp and " + mana + " mana! " +
-                    "\nLooks like the enemy " + "dropped " + moneyDropped + " coins! Adding this to inventory.");
+            System.out.println("You have successfully beat the enemy and get " + xp + " xp and " + mana + " mana! "
+                    + "\nLooks like the enemy " + "dropped " + moneyDropped + " coins! Adding this to inventory.");
             ((PlayerModifier) player).addXp(xp);
             ((PlayerModifier) player).addCoins(moneyDropped);
             ((PlayerModifier) player).addMana(mana);
@@ -341,7 +340,7 @@ public class GamePlay implements FloorMediator {
                 } else {
                     String itemName = droppedLoot.getItemName();
                     String pre = itemName.equals("Potion")
-                            || itemName.equals("Shield") || itemName.equals("Weapon") || itemName.equals("Helm")? "a "
+                            || itemName.equals("Shield") || itemName.equals("Weapon") || itemName.equals("Helm") ? "a "
                             : "";
 
                     String post = itemName.equals("Gauntlet") ? "s" : "";
@@ -423,14 +422,14 @@ public class GamePlay implements FloorMediator {
                         System.out.println(item.getRarity() + " : " + item.getItemName());
                         System.out.println("Cost: " + (item.getTier() * 5));
                         if (((PlayerModifier) player).getInventory().containsKey(item.getItemName())) {
-                        if (((PlayerModifier) player).getInventory().get(item.getItemName()).getTier()
-                                < item.getTier()) {
-                            if (player.getCoins() >= ((item.getTier() * 5))) {
-                                System.out.println("This is stronger than what I currently have, "
-                                        + "and I have enough money to buy it, purchasing this now!");
-                                ((PlayerModifier) player).updateInventory(item.getItemName(), item);
-                                ((PlayerModifier) player).addCoins(-1 * (item.getTier() * 5));
-                            }
+                            if (((PlayerModifier) player).getInventory().get(item.getItemName()).getTier()
+                                    < item.getTier()) {
+                                if (player.getCoins() >= ((item.getTier() * 5))) {
+                                    System.out.println("This is stronger than what I currently have, "
+                                            + "and I have enough money to buy it, purchasing this now!");
+                                    ((PlayerModifier) player).updateInventory(item.getItemName(), item);
+                                    ((PlayerModifier) player).addCoins(-1 * (item.getTier() * 5));
+                                }
                             }
                         } else {
                             if (player.getCoins() >= ((item.getTier() * 5))) {
@@ -442,7 +441,8 @@ public class GamePlay implements FloorMediator {
                             }
                         }
 
-                        if (item.getItemName().equals("Instant Level Up") && (player.getCoins() >= (item.getTier() * 5))) {
+                        if (item.getItemName().equals("Instant Level Up") && (player.getCoins() >= (item.getTier()
+                                * 5))) {
                             System.out.println(item.getItemName() + "I dont have this in my "
                                     + "inventory yet, and I have enough money to buy it, purchasing..");
                             System.out.println();
@@ -512,8 +512,7 @@ public class GamePlay implements FloorMediator {
                 if (player.getXp() >= xpRequired) {
                     ((PlayerModifier) player).levelUp();
                     ((PlayerModifier) player).addXp(-xpRequired);
-                }
-                else {
+                } else {
                     break;
                 }
             }
@@ -546,19 +545,18 @@ public class GamePlay implements FloorMediator {
         }
 
         if (floor % 5 == 0) {
-             if (currentCycle == 1) {
+            if (currentCycle == 1) {
                 // at cycle 1, revert changes from cycle 1 and add cycle 2 changes.
                 currentCycle = 2;
-                System.out.println("You hit Q2 cycle, you lose your Q1 perk and get your physical attack power back, but" +
-                        " now you have a 25% chance to take a second turn in a row when fighting an enemy!");
-
+                System.out.println("You hit Q2 cycle, you lose your Q1 perk and get your physical attack power back, "
+                        + "but now you have a 25% chance to take a second turn in a row when fighting an enemy!");
                 ((PlayerModifier) player).setSpecialEffectAttackBoost(10);
                 this.secondChance = true;
             } else if (currentCycle == 2) {
                 // at cycle 3, revert changes from cycle 2 and add cycle 3 changes.
                 currentCycle = 3;
-                System.out.println("You hit Q3 cycle, you lose your Q2 perk and don't get a chance for a second hit, " +
-                        "but now you gain extra money!");
+                System.out.println("You hit Q3 cycle, you lose your Q2 perk and don't get a chance for a second hit, "
+                        + "but now you gain extra money!");
                 this.secondChance = false;
                 this.moneyMultiplier = 1.5;
             } else if (currentCycle == 3) {
@@ -567,8 +565,8 @@ public class GamePlay implements FloorMediator {
                 // Q4 of cycle
                 // System.out.println("Current Floor: " + floor);
                 // System.out.println("You hit Q4 cycle and get a Temporary boost to all your attributes!");
-                System.out.println("You hit Q4 cycle, you lose your Q3 perk and don't get extra money anymore, " +
-                        "but now you get a temporary boost to all your attributes!");
+                System.out.println("You hit Q4 cycle, you lose your Q3 perk and don't get extra money anymore, "
+                        + "but now you get a temporary boost to all your attributes!");
                 ((PlayerModifier) player).addHealth(10);
                 ((PlayerModifier) player).addMana(5);
                 ((PlayerModifier) player).setSpecialEffectAttackBoost(10);
@@ -581,8 +579,8 @@ public class GamePlay implements FloorMediator {
                 // was at cycle 4, revert changes from cycle 4 and add cycle 1 changes.
                 // System.out.println("Current Floor: " + floor);
                 // System.out.println("You hit Q1 cycle and get a reduction in physical attacks for the next 5 turns!");
-                System.out.println("You are in Q1 cycle, you lose your Q4 perk and dont have a boost on all of your " +
-                        "attributes anymore, but you get a reduction in physical attacks for the next 5 turns!");
+                System.out.println("You are in Q1 cycle, you lose your Q4 perk and dont have a boost on all of your "
+                        + "attributes anymore, but you get a reduction in physical attacks for the next 5 turns!");
                 ((PlayerModifier) player).addHealth(-10);
                 ((PlayerModifier) player).addMana(-5);
                 ((PlayerModifier) player).setSpecialEffectAttackBoost(-10);
@@ -618,13 +616,12 @@ public class GamePlay implements FloorMediator {
         return scnr.nextLine();
     }
 
-
     /**
      * delays the thread responsible for running the game by a specified amount in milliseconds
      *
      * @param millis is amount in milliseconds as a long
      */
-    public static void sleep(long millis) {
+    public void sleep(long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {

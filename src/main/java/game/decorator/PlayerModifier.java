@@ -82,7 +82,7 @@ public class PlayerModifier extends CharacterDecorator {
         int levels = -1;
         while (temp > 0) {
             levels++;
-            temp -= (20*(getPlayerLevel() + levels));
+            temp -= (20 * (getPlayerLevel() + levels));
         }
 
         return levels;
